@@ -1,0 +1,447 @@
+{
+  "schema_version": 1,
+  "article_doi": "10.1007/s42973-026-00243-x",
+  "results": [
+    {
+      "key": "bernstein-lower",
+      "paper": "Theorem 1",
+      "title": "Bernstein lower",
+      "declaration": "Hellinger.bernsteinLowerCoeff_mul_tailPower_le_bernsteinSq",
+      "related_declarations": []
+    },
+    {
+      "key": "bernstein-upper",
+      "paper": "Theorem 1",
+      "title": "Bernstein upper",
+      "declaration": "Hellinger.bernsteinSq_le_hellinger_add_tailPower",
+      "related_declarations": []
+    },
+    {
+      "key": "hellinger-kl-lower",
+      "paper": "Theorem 1",
+      "title": "Hellinger kl lower",
+      "declaration": "Hellinger.hellingerSq_le_kl",
+      "related_declarations": []
+    },
+    {
+      "key": "kl-power-tail-upper",
+      "paper": "Theorem 1",
+      "title": "Kl power tail upper",
+      "declaration": "Hellinger.kl_le_hellinger_add_tailPower",
+      "related_declarations": []
+    },
+    {
+      "key": "centered-moment",
+      "paper": "Theorem 1",
+      "title": "Centered moment",
+      "declaration": "Hellinger.two_neg_rpow_mul_centeredLogMoment_le_logMoment",
+      "related_declarations": []
+    },
+    {
+      "key": "gamma-moment",
+      "paper": "Theorem 1",
+      "title": "Gamma moment",
+      "declaration": "Hellinger.logMoment_le_gamma_bernsteinSq",
+      "related_declarations": []
+    },
+    {
+      "key": "kl-log-tail-lower",
+      "paper": "Theorem 2",
+      "title": "Kl log tail lower",
+      "declaration": "Hellinger.klTailLowerCoeff_mul_tailLogMoment_le_kl",
+      "related_declarations": []
+    },
+    {
+      "key": "kl-log-tail-upper",
+      "paper": "Theorem 2",
+      "title": "Kl log tail upper",
+      "declaration": "Hellinger.kl_le_hellinger_add_tailLogMoment",
+      "related_declarations": []
+    },
+    {
+      "key": "log-tail-lower",
+      "paper": "Theorem 2",
+      "title": "Log tail lower",
+      "declaration": "Hellinger.tailLogMoment_le_logMoment",
+      "related_declarations": []
+    },
+    {
+      "key": "log-tail-upper",
+      "paper": "Theorem 2",
+      "title": "Log tail upper",
+      "declaration": "Hellinger.logMoment_le_hellinger_add_tailLogMoment",
+      "related_declarations": []
+    },
+    {
+      "key": "log-tail-interpolation",
+      "paper": "Theorem 2",
+      "title": "Log tail interpolation",
+      "declaration": "Hellinger.tailLogMoment_interpolation",
+      "related_declarations": []
+    },
+    {
+      "key": "uniform-bernstein",
+      "paper": "Section 3",
+      "title": "Uniform bernstein",
+      "declaration": "Hellinger.uniform_bernsteinSq_iff_tailPower",
+      "related_declarations": []
+    },
+    {
+      "key": "uniform-kl",
+      "paper": "Section 3",
+      "title": "Uniform kl",
+      "declaration": "Hellinger.uniform_kl_iff_tailLogMoment",
+      "related_declarations": []
+    },
+    {
+      "key": "uniform-log-moment",
+      "paper": "Section 3",
+      "title": "Uniform log moment",
+      "declaration": "Hellinger.uniform_logMoment_iff_tailLogMoment",
+      "related_declarations": []
+    },
+    {
+      "key": "power-tail-monotonicity",
+      "paper": "Section 4",
+      "title": "Power tail monotonicity",
+      "declaration": "Hellinger.Comparison.tailPower_mono_exponent",
+      "related_declarations": []
+    },
+    {
+      "key": "power-tail-interpolation",
+      "paper": "Section 4",
+      "title": "Power tail interpolation",
+      "declaration": "Hellinger.Comparison.tailPower_interpolation",
+      "related_declarations": []
+    },
+    {
+      "key": "uniform-exponent-comparison",
+      "paper": "Section 4",
+      "title": "Uniform exponent comparison",
+      "declaration": "Hellinger.Comparison.uniform_tailPower_of_larger_exponent",
+      "related_declarations": []
+    },
+    {
+      "key": "power-density-example",
+      "paper": "Section 4",
+      "title": "Power density example",
+      "declaration": "Hellinger.Comparison.Examples.Power.power_density_separation",
+      "related_declarations": [
+        "Hellinger.Comparison.Examples.Power.exists_half_tail_multiplier",
+        "Hellinger.Comparison.Examples.Power.no_one_tail_multiplier",
+        "Hellinger.Comparison.Examples.Power.power_density_separation_four"
+      ]
+    },
+    {
+      "key": "ws-equivalence",
+      "paper": "Section 4",
+      "title": "Ws equivalence",
+      "declaration": "Hellinger.uniform_ws_iff_tailPower",
+      "related_declarations": []
+    },
+    {
+      "key": "ws-log-moments",
+      "paper": "Section 4",
+      "title": "Ws log moments",
+      "declaration": "Hellinger.Comparison.tailLogMoment_le_of_ws",
+      "related_declarations": [
+        "Hellinger.Comparison.tailLogMoment_four_le_of_ws",
+        "Hellinger.Comparison.uniform_tailLogMoment_of_uniform_ws"
+      ]
+    },
+    {
+      "key": "ws-kl-log-moments",
+      "paper": "Section 4",
+      "title": "Ws kl log moments",
+      "declaration": "Hellinger.Comparison.kl_and_logMoment_le_of_ws",
+      "related_declarations": [
+        "Hellinger.Comparison.uniform_kl_of_uniform_ws",
+        "Hellinger.Comparison.uniform_logMoment_of_uniform_ws"
+      ]
+    },
+    {
+      "key": "cm-tail-bound",
+      "paper": "Section 4",
+      "title": "Cm tail bound",
+      "declaration": "Hellinger.Comparison.tailPower_one_le_of_conditionalMoment_le",
+      "related_declarations": [
+        "Hellinger.Comparison.tailPower_four_le_of_conditionalMoment_le",
+        "Hellinger.Comparison.uniform_tailPower_of_uniform_conditionalMoment"
+      ]
+    },
+    {
+      "key": "pairwise-cm-finiteness",
+      "paper": "Section 4",
+      "title": "Pairwise cm finiteness",
+      "declaration": "Hellinger.Comparison.conditionalMoment_lt_top_of_tailPower_one_lt_top",
+      "related_declarations": []
+    },
+    {
+      "key": "nc-without-uniform-cm",
+      "paper": "Section 4",
+      "title": "Nc without uniform cm",
+      "declaration": "Hellinger.Comparison.Examples.CMSeparation.cm_family_separation",
+      "related_declarations": [
+        "Hellinger.Comparison.Examples.CMSeparation.conditionalMoment_eq_inverse",
+        "Hellinger.Comparison.Examples.CMSeparation.conditionalMoment_zero",
+        "Hellinger.Comparison.Examples.CMSeparation.hellingerSq_div_parameter_tendsto",
+        "Hellinger.Comparison.Examples.CMSeparation.hellingerSq_eq_expr",
+        "Hellinger.Comparison.Examples.CMSeparation.uniform_tailPower_four"
+      ]
+    },
+    {
+      "key": "bounded-ratio-implies-cm",
+      "paper": "Section 4",
+      "title": "Bounded ratio implies cm",
+      "declaration": "Hellinger.Comparison.uniform_conditionalMoment_of_uniform_ratio_representative_bound",
+      "related_declarations": [
+        "Hellinger.Comparison.conditionalMoment_le_of_dominatedRatio_le",
+        "Hellinger.Comparison.uniform_conditionalMoment_of_uniform_pointwise_ratio_bound"
+      ]
+    },
+    {
+      "key": "normal-unbounded-ratio",
+      "paper": "Section 4",
+      "title": "Normal unbounded ratio",
+      "declaration": "Hellinger.Comparison.Examples.Normal.normal_location_fails_ub",
+      "related_declarations": []
+    },
+    {
+      "key": "normal-bounded-family-cm",
+      "paper": "Section 4",
+      "title": "Normal bounded family cm",
+      "declaration": "Hellinger.Comparison.Examples.Normal.uniform_conditionalMoment_normalFamily",
+      "related_declarations": [
+        "Hellinger.Comparison.Examples.Normal.bounded_normal_conditionalMoment",
+        "Hellinger.Comparison.Examples.Normal.conditionalMoment_zero",
+        "Hellinger.Comparison.Examples.Normal.conditionalRatioMean_normalLaw_exp_one",
+        "Hellinger.Comparison.Examples.Normal.conditionalRatioMean_zero",
+        "Hellinger.Comparison.Examples.Normal.normal_bounded_family_cm_not_ub",
+        "Hellinger.Comparison.Examples.Normal.normal_conditionalMoment_le_exp_one",
+        "Hellinger.Comparison.Examples.Normal.normal_exp_one_cdf_limit",
+        "Hellinger.Comparison.Examples.Normal.tendsto_conditionalTailFormula_zero"
+      ]
+    },
+    {
+      "key": "nc-implies-full-moment",
+      "paper": "Section 4",
+      "title": "Nc implies full moment",
+      "declaration": "Hellinger.Comparison.uniform_fullRatioMoment_of_uniform_tailPower_one",
+      "related_declarations": [
+        "Hellinger.Comparison.fullRatioMoment_le_tailPower_add_cutoff",
+        "Hellinger.Comparison.fullRatioMoment_lt_top_iff_tailPower_one_lt_top"
+      ]
+    },
+    {
+      "key": "refined-full-moment-bound",
+      "paper": "Section 4",
+      "title": "Refined full moment bound",
+      "declaration": "Hellinger.Comparison.fullRatioMoment_le_tailPower_add_sqrt_hellinger",
+      "related_declarations": [
+        "Hellinger.Comparison.fullRatioMoment_le_tailPower_four_add_sqrt_hellinger"
+      ]
+    },
+    {
+      "key": "nc-without-full-moment",
+      "paper": "Section 4",
+      "title": "Nc without full moment",
+      "declaration": "Hellinger.Comparison.Examples.Power.fractional_nc_without_full_moment",
+      "related_declarations": [
+        "Hellinger.Comparison.Examples.Power.exists_half_tail_multiplier",
+        "Hellinger.Comparison.Examples.Power.fullRatioMoment_eq_top"
+      ]
+    },
+    {
+      "key": "full-moment-without-nc",
+      "paper": "Section 4",
+      "title": "Full moment without nc",
+      "declaration": "Hellinger.Comparison.Examples.FMSeparation.fm_family_separation",
+      "related_declarations": [
+        "Hellinger.Comparison.Examples.FMSeparation.eventually_tailPower_gt_mul",
+        "Hellinger.Comparison.Examples.FMSeparation.fullRatioMoment_eq_of_pos",
+        "Hellinger.Comparison.Examples.FMSeparation.fullRatioMoment_zero",
+        "Hellinger.Comparison.Examples.FMSeparation.hellingerSq_eq",
+        "Hellinger.Comparison.Examples.FMSeparation.tailPower_half_four"
+      ]
+    },
+    {
+      "key": "comparison-diagram",
+      "paper": "Section 4",
+      "title": "Comparison diagram",
+      "declaration": "Hellinger.Comparison.Summary.forward_implications",
+      "related_declarations": [
+        "Hellinger.Comparison.Summary.fractional_nc_without_finite_moment",
+        "Hellinger.Comparison.Summary.nc_one_without_uniform_cm",
+        "Hellinger.Comparison.Summary.pairwise_cm_iff_fm",
+        "Hellinger.Comparison.Summary.pairwise_nc_one_iff_fm",
+        "Hellinger.Comparison.Summary.strict_separations",
+        "Hellinger.Comparison.Summary.uniform_cm_without_ub",
+        "Hellinger.Comparison.Summary.uniform_full_moment_without_fractional_nc"
+      ]
+    },
+    {
+      "key": "theorem8",
+      "paper": "Theorem 8",
+      "title": "Sieve MLE rate under the annular entropy-tail condition",
+      "declaration": "Hellinger.MLE.theorem8_unconditional",
+      "related_declarations": [
+        "Hellinger.MLE.theorem8",
+        "Hellinger.MLE.theorem8_measurable_unconditional",
+        "Hellinger.MLE.theorem8_measurable"
+      ]
+    },
+    {
+      "key": "theorem8-power-envelope",
+      "paper": "Theorem 8",
+      "title": "Sieve MLE rate under the power envelope",
+      "declaration": "Hellinger.MLE.theorem8_of_powerEnvelope_unconditional",
+      "related_declarations": [
+        "Hellinger.MLE.annularTail_of_powerEnvelope",
+        "Hellinger.MLE.theorem8_of_powerEnvelope"
+      ]
+    },
+    {
+      "key": "theorem8-whole-sieve",
+      "paper": "Theorem 8",
+      "title": "Sieve MLE rate under the whole-sieve bound",
+      "declaration": "Hellinger.MLE.theorem8_of_wholeSieve_unconditional",
+      "related_declarations": [
+        "Hellinger.MLE.powerEnvelope_of_wholeSieve",
+        "Hellinger.MLE.theorem8_of_wholeSieve"
+      ]
+    },
+    {
+      "key": "bernstein-maximal-inequality",
+      "paper": "Proof of Theorem 8",
+      "title": "Bernstein-norm bracketing maximal inequality",
+      "declaration": "Hellinger.MLE.External.vdw_2_14_18_prime",
+      "related_declarations": []
+    },
+    {
+      "key": "theorem8-weak-law",
+      "paper": "Discussion of Theorem 8",
+      "title": "Sieve MLE rate under the weak-law truncation condition",
+      "declaration": "Hellinger.MLE.theorem8_weakLaw_unconditional",
+      "related_declarations": [
+        "Hellinger.MLE.theorem8_weakLaw",
+        "Hellinger.MLE.theorem8_weakLaw_measurable_unconditional",
+        "Hellinger.MLE.theorem8_weakLaw_of_powerEnvelope_unconditional",
+        "Hellinger.MLE.theorem8_weakLaw_of_wholeSieve_unconditional"
+      ]
+    },
+    {
+      "key": "theorem8-first-moment",
+      "paper": "Discussion of Theorem 8",
+      "title": "Sieve MLE rate under the first-moment log tail",
+      "declaration": "Hellinger.MLE.theorem8_firstMoment_unconditional",
+      "related_declarations": [
+        "Hellinger.MLE.firstMoment_implies_weakLaw"
+      ]
+    },
+    {
+      "key": "theorem8-from-weak-law",
+      "paper": "Theorem 8",
+      "title": "Theorem 8 as a corollary of the weak-law version",
+      "declaration": "Hellinger.MLE.theorem8_of_weakLaw",
+      "related_declarations": [
+        "Hellinger.MLE.squaredTail_implies_firstMoment",
+        "Hellinger.MLE.theorem8_via_weakLaw"
+      ]
+    },
+    {
+      "key": "theorem8-nonvacuity",
+      "paper": "Theorem 8",
+      "title": "Jointly satisfiable hypotheses",
+      "declaration": "Hellinger.MLE.nonvacuous_nondegenerate",
+      "related_declarations": [
+        "Hellinger.MLE.nonvacuous",
+        "Hellinger.MLE.nonvacuous_weakLaw"
+      ]
+    },
+    {
+      "key": "sharp-kl-log-tail-upper",
+      "paper": "Theorem 2(i)",
+      "title": "Sharpened KL log-tail upper",
+      "declaration": "Hellinger.Sharp.kl_le_hellinger_add_tailLogMoment_sharp",
+      "related_declarations": [
+        "Hellinger.Sharp.kl_le_hellinger_add_tailLogMoment_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-kl-power-tail-upper",
+      "paper": "Theorem 1(i)",
+      "title": "Sharpened KL power-tail upper",
+      "declaration": "Hellinger.Sharp.kl_le_hellinger_add_tailPower_sharp",
+      "related_declarations": [
+        "Hellinger.Sharp.tailLogMoment_one_le_tailPower_sharp",
+        "Hellinger.Sharp.kl_le_hellinger_add_tailPower_of_sharp",
+        "Hellinger.Sharp.tailLogMoment_one_le_inv_mul_tailPower_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-kl-log-tail-lower",
+      "paper": "Theorem 2(i)",
+      "title": "Sharpened KL log-tail lower",
+      "declaration": "Hellinger.Sharp.klTailLowerSharpCoeff_mul_tailLogMoment_le_kl",
+      "related_declarations": [
+        "Hellinger.Sharp.klTailLowerCoeff_mul_tailLogMoment_le_kl_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-bernstein-lower",
+      "paper": "Theorem 1",
+      "title": "Sharpened Bernstein lower",
+      "declaration": "Hellinger.Sharp.bernsteinLowerSharpCoeff_mul_tailPower_le_bernsteinSq",
+      "related_declarations": [
+        "Hellinger.Sharp.bernsteinLowerCoeff_mul_tailPower_le_bernsteinSq_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-bernstein-upper",
+      "paper": "Theorem 1",
+      "title": "Improved Bernstein upper",
+      "declaration": "Hellinger.Sharp.bernsteinSq_le_hellinger_add_tailPower_sq",
+      "related_declarations": [
+        "Hellinger.Sharp.bernsteinSq_le_hellinger_add_tailPower_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-log-moment-upper",
+      "paper": "Theorem 2(ii)",
+      "title": "Sharpened log-moment upper",
+      "declaration": "Hellinger.Sharp.logMoment_le_hellinger_add_tailLogMoment_sharp",
+      "related_declarations": [
+        "Hellinger.Sharp.logMoment_le_hellinger_add_tailLogMoment_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-interpolation",
+      "paper": "Theorem 2(iii) and Proposition 3",
+      "title": "Improved tail interpolation",
+      "declaration": "Hellinger.Sharp.tailLogMoment_interpolation_sharp",
+      "related_declarations": [
+        "Hellinger.Sharp.tailPower_interpolation_sharp",
+        "Hellinger.Sharp.tailLogMoment_interpolation_of_sharp",
+        "Hellinger.Sharp.tailPower_interpolation_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-conditional-moment",
+      "paper": "Proposition 5(i)",
+      "title": "Improved CM to NC coefficient",
+      "declaration": "Hellinger.Sharp.tailPower_le_of_conditionalMoment_le_sharp",
+      "related_declarations": [
+        "Hellinger.Sharp.tailPower_four_le_of_conditionalMoment_le_of_sharp"
+      ]
+    },
+    {
+      "key": "sharp-coefficients",
+      "paper": "Theorems 1-2 and Proposition 5",
+      "title": "Sharpened coefficients improve the paper's",
+      "declaration": "Hellinger.Sharp.sharpCoeffs_improve",
+      "related_declarations": [
+        "Hellinger.Sharp.sharpCoeff_values"
+      ]
+    }
+  ]
+}
