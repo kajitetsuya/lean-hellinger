@@ -8,7 +8,7 @@ module
 public import Hellinger.Definitions
 public import Hellinger.GammaScalar
 
-/-! The Gamma comparison for extended nonnegative log moments. -/
+/-! The Gamma comparison for the extended nonnegative Kullback–Leibler variations. -/
 
 public section
 
@@ -41,8 +41,8 @@ theorem abs_rpow_le_gamma_bernsteinKernel {δ k : ℝ} (hδ : 0 < δ) (hk : 2 �
 variable {α : Type*} [MeasurableSpace α]
 
 /-- The full Gamma moment bound, including infinite moments and failure of absolute continuity.
-No finite-KL, finite-moment or finite-measure assumption is needed. The positive-scale domain
-is stronger than the paper's `0 < δ ≤ 1` domain for this clause. -/
+No finite Kullback–Leibler divergence, finite-moment or finite-measure assumption is needed.
+The positive-scale domain is stronger than the paper's `0 < δ ≤ 1` domain for this clause. -/
 theorem logMoment_le_gamma_bernsteinSq (μ ν : Measure α) {δ k : ℝ}
     (hδ : 0 < δ) (hk : 2 ≤ k) :
     logMoment μ ν k ≤

@@ -16,7 +16,7 @@ public import Mathlib.Tactic.NormNum
 
 namespace Hellinger
 
-/-- The squared Hellinger kernel at a square is bounded by the KL kernel. -/
+/-- The squared Hellinger kernel at a square is bounded by the Kullback–Leibler kernel. -/
 theorem sq_sub_one_le_klFun_sq {x : ℝ} (hx : 0 ≤ x) :
     (x - 1) ^ 2 ≤ InformationTheory.klFun (x ^ 2) := by
   have h := mul_nonneg (show (0 : ℝ) ≤ 2 * x by linarith)

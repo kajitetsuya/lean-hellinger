@@ -228,7 +228,7 @@ theorem llr_law_ae_eq (hp : IsProbDensity μ p) (hq : IsProbDensity μ q)
     (by rw [hp.lintegral_eq_one]; exact ENNReal.one_ne_top)
     (by rw [hq.lintegral_eq_one]; exact ENNReal.one_ne_top) hac
 
-/-! ### Kullback--Leibler divergence -/
+/-! ### Kullback–Leibler divergence -/
 
 /-- Integrability of the log-likelihood ratio under `law μ p`, in density form. -/
 theorem integrable_llr_law_iff (hp : IsProbDensity μ p) (hq : IsProbDensity μ q)
@@ -239,7 +239,7 @@ theorem integrable_llr_law_iff (hp : IsProbDensity μ p) (hq : IsProbDensity μ 
     integrable_withDensity_iff_integrable_smul hp.measurable]
   simp only [NNReal.smul_def, smul_eq_mul]
 
-/-- The KL divergence between two laws, in density form, on the finite branch. -/
+/-- The Kullback–Leibler divergence between two laws, in density form, on the finite branch. -/
 theorem kl_law_eq (hp : IsProbDensity μ p) (hq : IsProbDensity μ q)
     (hac : law μ p ≪ law μ q)
     (hint : Integrable (fun x ↦ (p x : ℝ) * Real.log ((p x : ℝ) / q x)) μ) :

@@ -109,7 +109,7 @@ theorem MLEHypotheses.eventually_tailLogMoment_one_le
         ring_nf
 
 theorem squaredTail_implies_firstMoment : SquaredTailImpliesFirstMomentStatement.{u, v} := by
-  intro 𝒳 _ μ Ω _ ℙ X p₀ S pn phat δ D M h
+  intro 𝒳 _ μ Ω _ Pr X p₀ S pn phat δ D M h
   refine ⟨{ probability := h.probability
             density := h.density
             measurable_obs := h.measurable_obs

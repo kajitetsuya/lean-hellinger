@@ -15,13 +15,14 @@ public import Mathlib.Analysis.Convex.Slope
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
-/-! Sharp variation and improved interpolation coefficients.
+/-! Sharp Kullback–Leibler variation and improved interpolation coefficients.
 
-The variation bound uses the sharp coefficient `max(J(c) (log c)^k, B_k)`: on `(0, 1)` the
-kernel ratio is at most its supremum `B_k`, on `(1, c]` the ratio is nondecreasing and so at
-most its value `J(c) (log c)^k` at `r = c`, and above `c` the tail kernel takes over. The
-interpolation bounds stop the Hölder proofs of the paper's interpolation bounds before the
-weakening `J^{1-r} ≤ J`. The arguments are summarized in `docs/SharpConstants.md`. -/
+The Kullback–Leibler variation bound uses the sharp coefficient `max(J(c) (log c)^k, B_k)`:
+on `(0, 1)` the kernel ratio is at most its supremum `B_k`, on `(1, c]` the ratio is
+nondecreasing and so at most its value `J(c) (log c)^k` at `r = c`, and above `c` the tail
+kernel takes over. The interpolation bounds stop the Hölder proofs of the paper's
+interpolation bounds before the weakening `J^{1-r} ≤ J`. The arguments are summarized in
+`docs/SharpConstants.md`. -/
 
 @[expose] public section
 
@@ -106,8 +107,8 @@ theorem variation_density_mid_sharp {c k r : ℝ} (hk : 2 ≤ k) (hr : 1 < r) (h
       mul_le_mul_of_nonneg_right hA hcp
     _ = _ := by ring
 
-/-- On `(0, 1)` the pointwise variation bound `variation_density_upper` at any cutoff `c > 1`
-bounds the kernel ratio. -/
+/-- On `(0, 1)` the pointwise Kullback–Leibler variation bound `variation_density_upper` at any
+cutoff `c > 1` bounds the kernel ratio. -/
 theorem variationRatio_le_variationUpperCoeff {c k r : ℝ} (hc : 1 < c) (hk : 2 ≤ k)
     (hr0 : 0 < r) (hr1 : r < 1) :
     r * |Real.log r| ^ k / (Real.sqrt r - 1) ^ 2 ≤ variationUpperCoeff c k := by
@@ -171,7 +172,7 @@ theorem variation_density_upper_sharp {c k r : ℝ} (hc : 1 < c) (hk : 2 ≤ k) 
     · exact (variation_density_mid_sharp hk hr1 hrc).trans
         (mul_le_mul_of_nonneg_right (le_max_left _ _) (sq_nonneg _))
 
-/-! ### The sharp measure-level variation bound -/
+/-! ### The sharp measure-level Kullback–Leibler variation bound -/
 
 theorem logMoment_le_hellinger_add_tailLogMoment_sharp : VariationUpperSharpStatement.{u} := by
   intro α _ μ ν _ _ c k hc hk

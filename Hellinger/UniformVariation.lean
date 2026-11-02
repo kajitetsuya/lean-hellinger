@@ -8,7 +8,7 @@ module
 public import Hellinger.Uniform
 public import Hellinger.VariationBounds
 
-/-! Uniform real log-moment control for a single fixed cutoff and exponent. -/
+/-! Uniform real-order Kullback–Leibler variation control for a single fixed cutoff and exponent. -/
 
 @[expose] public section
 

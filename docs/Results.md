@@ -1,16 +1,16 @@
 # Result map
 
-This map connects 49 principal results to Theorems 1, 2 and 8 and Section 4 of [Kaji (2026)](https://doi.org/10.1007/s42973-026-00243-x), together with the sharpened constants.
+This map connects 50 principal results to Theorems 1, 2 and 8 and Section 4 of [Kaji (2026)](https://doi.org/10.1007/s42973-026-00243-x), together with the sharpened constants.
 The [mathematical notes](../NOTES.md) record the corrections and endpoint clarifications used below.
 Every declaration is available through `import Hellinger`; [declarations.json](../declarations.json) gives the machine-readable map and related declarations.
 
 ## Notation and domains
 
 Let `μ = P₀` and `ν = P` be probability measures on an arbitrary measurable space, `R = p₀/p`, and `L = log R`.
-Write `H² = ∫(√p₀ − √p)²`, `K = KL(μ, ν)`, `Vₖ = E₀|L|ᵏ`, `Vₖ,₀ = E₀|L − K|ᵏ`, and `Bδ² = 2E₀[exp(|δL|) − 1 − |δL|]`.
+Write `H² = ∫(√p₀ − √p)²` for the squared Hellinger distance, `K` for the Kullback–Leibler divergence of `ν` from `μ`, `Vₖ = E₀|L|ᵏ` and `Vₖ,₀ = E₀|L − K|ᵏ` for the `k`th order Kullback–Leibler variation and its centered form, and `Bδ² = 2E₀[exp(|δL|) − 1 − |δL|]` for the squared Bernstein "norm" of `δL`.
 For a fixed real `q > 1`, set `Tδ(q) = E₀[Rᵟ; R > q]` and `Aₖ(q) = E₀[Lᵏ; R > q]`.
 The nonnegative quantities take values in `[0, ∞]`; singular-support contributions are retained.
-Only the centered moment requires `K < ∞`.
+Only the centered variation requires `K < ∞`.
 No common dominating measure is required for an entire family: a dominating measure can be chosen separately for each pair.
 The density identities are proved in [HellingerBridge.lean](../Hellinger/HellingerBridge.lean), [DensityBridge.lean](../Hellinger/Comparison/DensityBridge.lean), and [DensityTailBridge.lean](../Hellinger/Comparison/DensityTailBridge.lean).
 
@@ -23,7 +23,7 @@ J(q) = (1 − q^(−1/2))^(−2)             C_I(q) = J(q)
 C_V(q,k) = max(4√q (log q)^(k−2), J(q)(k/e)^k).
 ```
 
-The intended domains are `0 < δ ≤ 1` for the Bernstein comparison, `k ≥ 2` for the full log-moment comparison, and `k' ≥ k > 0` for log-tail interpolation.
+The intended domains are `0 < δ ≤ 1` for the comparison with the Bernstein "norm", `k ≥ 2` for the comparison with the Kullback–Leibler variation, and `k' ≥ k > 0` for log-tail interpolation.
 Power-tail interpolation covers every `δ' ≥ δ > 0`, without an upper bound of one.
 Some individual Lean lemmas have broader domains, including finite measures or arbitrary positive Bernstein scale; their types state those hypotheses explicitly.
 
@@ -35,7 +35,7 @@ Some individual Lean lemmas have broader domains, including finite measures or a
 | Theorem 1 | `Bδ² ≤ C_B(q,δ) H² + 2Tδ(q)` | [`Hellinger.bernsteinSq_le_hellinger_add_tailPower`](../Hellinger/BernsteinBounds.lean) |
 | Theorem 1(i) | `H² ≤ K` | [`Hellinger.hellingerSq_le_kl`](../Hellinger/KL.lean) |
 | Theorem 1(i) | `K ≤ C_K(q) H² + δ⁻¹Tδ(q)` | [`Hellinger.kl_le_hellinger_add_tailPower`](../Hellinger/KLPower.lean) |
-| Theorem 1(ii) | `2^(−k) Vₖ,₀ ≤ Vₖ` for real `k ≥ 2` and finite KL | [`Hellinger.two_neg_rpow_mul_centeredLogMoment_le_logMoment`](../Hellinger/Centering.lean) |
+| Theorem 1(ii) | `2^(−k) Vₖ,₀ ≤ Vₖ` for real `k ≥ 2` and finite `K` | [`Hellinger.two_neg_rpow_mul_centeredLogMoment_le_logMoment`](../Hellinger/Centering.lean) |
 | Theorem 1(ii) | `Vₖ ≤ Γ(k+1) δ^(−k) Bδ²/2` for real `k ≥ 2` | [`Hellinger.logMoment_le_gamma_bernsteinSq`](../Hellinger/GammaMoment.lean) |
 
 ## Theorem 2
@@ -87,7 +87,7 @@ Its implication to CM is proved through an explicit almost-everywhere agreement 
 | Example 1 | Uniform density versus density `2x` on `(0,1)`: half-power control holds and exponent-one control fails | [`Hellinger.Comparison.Examples.Power.power_density_separation`](../Hellinger/Comparison/Examples/Power.lean) |
 | Section 4, (WS) and (NC) | Uniform WS and ordinary-cutoff power-tail control are equivalent | [`Hellinger.uniform_ws_iff_tailPower`](../Hellinger/Comparison/Cutoff.lean) |
 | Proposition 4 | The explicit WS log-tail bound for every real `k > 0`, including multiplier zero | [`Hellinger.Comparison.tailLogMoment_le_of_ws`](../Hellinger/Comparison/WS.lean) |
-| Section 4.2 | WS gives KL and real-order log-moment Hellinger bounds | [`Hellinger.Comparison.kl_and_logMoment_le_of_ws`](../Hellinger/Comparison/WS.lean) |
+| Section 4.2 | WS gives Hellinger bounds on the Kullback–Leibler divergence and the variations of every real order | [`Hellinger.Comparison.kl_and_logMoment_le_of_ws`](../Hellinger/Comparison/WS.lean) |
 | Proposition 5(i) | A CM bound gives exponent-one NC; cutoff four retains coefficient `(2M + 1)²` | [`Hellinger.Comparison.tailPower_one_le_of_conditionalMoment_le`](../Hellinger/Comparison/ConditionalMoment.lean) |
 | Proposition 5(ii) | Finite exponent-one tail gives finite CM for a fixed pair | [`Hellinger.Comparison.conditionalMoment_lt_top_of_tailPower_one_lt_top`](../Hellinger/Comparison/FiniteMoment.lean) |
 | Example 2 | A probability family has one NC₁ multiplier and no uniform CM bound; the printed global NC coefficient is retained | [`Hellinger.Comparison.Examples.CMSeparation.cm_family_separation`](../Hellinger/Comparison/Examples/CMSeparation.lean) |
@@ -96,7 +96,7 @@ Its implication to CM is proved through an explicit almost-everywhere agreement 
 | Example 3 | Every bounded Normal parameter set has one finite CM bound, including the zero parameter | [`Hellinger.Comparison.Examples.Normal.uniform_conditionalMoment_normalFamily`](../Hellinger/Comparison/Examples/NormalControl.lean) |
 | Proposition 7 | Uniform NC₁ gives a uniform full first ratio moment | [`Hellinger.Comparison.uniform_fullRatioMoment_of_uniform_tailPower_one`](../Hellinger/Comparison/FiniteMoment.lean) |
 | Proof of Proposition 7 | `E₀R ≤ T₁(q) + √q(√q + 1)√(H²) + 1`; at four the coefficient is `6` | [`Hellinger.Comparison.fullRatioMoment_le_tailPower_add_sqrt_hellinger`](../Hellinger/Comparison/RefinedMoment.lean) |
-| Example 4 | Half-power NC and Bernstein control can hold while the full moment is infinite | [`Hellinger.Comparison.Examples.Power.fractional_nc_without_full_moment`](../Hellinger/Comparison/Examples/PowerConsequences.lean) |
+| Example 4 | Half-power NC and control of the Bernstein "norm" can hold while the full moment is infinite | [`Hellinger.Comparison.Examples.Power.fractional_nc_without_full_moment`](../Hellinger/Comparison/Examples/PowerConsequences.lean) |
 | Example 5 | One full-moment bound `2` for the two-piece family does not give uniform fractional NC | [`Hellinger.Comparison.Examples.FMSeparation.fm_family_separation`](../Hellinger/Comparison/Examples/FMSeparation.lean) |
 | Section 4 comparison diagram | Typed forward implications for families, with separate fixed-pair equivalences and strict separations | [`Hellinger.Comparison.Summary.forward_implications`](../Hellinger/Comparison/Summary.lean) |
 
@@ -108,7 +108,7 @@ The CM and WS cutoff-four specializations are `Hellinger.Comparison.tailPower_fo
 For a fixed pair, exponent-one NC, finite CM, and finite FM are equivalent; see `Hellinger.Comparison.Summary.pairwise_nc_one_iff_fm` and `pairwise_cm_iff_fm` in [Summary.lean](../Hellinger/Comparison/Summary.lean).
 The family counterexamples concern a constant shared by all members.
 The forward implication theorem distinguishes a uniform full-moment bound from memberwise finiteness, while `Hellinger.Comparison.Summary.strict_separations` collects the four separation examples.
-The FM family fails uniform tail control for every fixed positive exponent; its Bernstein consequence applies on `0 < δ ≤ 1`.
+The FM family fails uniform tail control for every fixed positive exponent; its consequence for the Bernstein "norm" applies on `0 < δ ≤ 1`.
 
 For the Normal model, [NormalConditional.lean](../Hellinger/Comparison/Examples/NormalConditional.lean) proves the article's CM upper bound by the conditional mean at threshold `e`, and [NormalRare.lean](../Hellinger/Comparison/Examples/NormalRare.lean) proves its corrected limit.
 [NormalControl.lean](../Hellinger/Comparison/Examples/NormalControl.lean) uses the admissible choice `a = 1`, at threshold `9/4`, to obtain a finite bound on every bounded parameter set.
@@ -122,6 +122,7 @@ The rate theorems also have forms taking the maximal inequality `Hellinger.MLE.E
 | Article locator | Result | Lean declaration |
 | --- | --- | --- |
 | Theorem 8 | `h(p₀, p̂_n) = O_P^*(max(δ_n, n^(−1/2)))` under the annular entropy-tail condition (D) | [`Hellinger.MLE.theorem8_unconditional`](../Hellinger/MLE/Theorem8Unconditional.lean) |
+| Theorem 8 | The printed single-radius entropy condition does not suffice: the article's statement is false | [`Hellinger.MLE.printedTheorem8_false`](../Hellinger/MLE/PrintedCounterexample.lean) |
 | Theorem 8 | The same rate under the power envelope (H); (H) implies (D) | [`Hellinger.MLE.theorem8_of_powerEnvelope_unconditional`](../Hellinger/MLE/Theorem8Unconditional.lean) |
 | Theorem 8 | The same rate under the whole-sieve bound (G); (G) implies (H) | [`Hellinger.MLE.theorem8_of_wholeSieve_unconditional`](../Hellinger/MLE/Theorem8Unconditional.lean) |
 | Proof of Theorem 8 | van der Vaart and Wellner (2023), Theorem 2.14.18', with `K₀ = 80` | [`Hellinger.MLE.External.vdw_2_14_18_prime`](../Hellinger/VdW/Main.lean) |

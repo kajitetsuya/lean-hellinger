@@ -69,7 +69,7 @@ theorem tailPower_eq_lintegral_density (h : μ ≪ ν) (c δ : ℝ) :
     (setLIntegral_ofReal_eq_lintegral_density h
       (measurable_const.mul (measurable_llr μ ν)).exp (measurableSet_tailEvent μ ν c))
 
-/-- The uncentered absolute log moment as a density integral, including infinity. -/
+/-- The Kullback–Leibler variation as a density integral, including infinity. -/
 theorem logMoment_eq_lintegral_density (h : μ ≪ ν) (k : ℝ) :
     logMoment μ ν k =
       ∫⁻ x, ENNReal.ofReal ((μ.rnDeriv ν x).toReal * |llr μ ν x| ^ k) ∂ν := by
@@ -77,7 +77,7 @@ theorem logMoment_eq_lintegral_density (h : μ ≪ ν) (k : ℝ) :
   apply lintegral_ofReal_eq_lintegral_density h
   simpa only [Real.norm_eq_abs] using (measurable_llr μ ν).norm.pow_const k
 
-/-- The Bernstein functional as a density integral, including infinity. -/
+/-- The squared Bernstein "norm" as a density integral, including infinity. -/
 theorem bernsteinSq_eq_lintegral_density (h : μ ≪ ν) (δ : ℝ) :
     bernsteinSq μ ν δ =
       ∫⁻ x, ENNReal.ofReal

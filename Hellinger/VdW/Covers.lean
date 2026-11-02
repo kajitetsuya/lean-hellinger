@@ -9,7 +9,7 @@ public import Hellinger.MLE.Defs
 
 /-!
 Auxiliary facts for the proof of `External.VdW_2_14_18_prime`: a finite bracketing number is
-attained by a cover of exactly that size, and the Bernstein size conditions convert between
+attained by a cover of exactly that size, and the Bernstein "norm" conditions convert between
 the root `bernsteinFun` and its square `bernsteinFunSq`.
 -/
 

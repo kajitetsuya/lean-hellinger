@@ -7,7 +7,7 @@ module
 
 public import Hellinger.KLBounds
 
-/-! The KL side bound obtained from a positive power tail. -/
+/-! The Kullback–Leibler divergence bound obtained from a positive power tail. -/
 
 @[expose] public section
 
@@ -44,7 +44,8 @@ theorem tailLogMoment_one_le_inv_mul_tailPower (μ ν : Measure α) (c : ℝ) {�
   · rw [tailLogMoment_of_not_ac h, tailPower_of_not_ac h]
     rw [ENNReal.mul_top (ENNReal.ofReal_pos.mpr (inv_pos.mpr hδ)).ne']
 
-/-- The generalized Theorem 1 KL upper bound; no finite-KL assumption is used. -/
+/-- The generalized Theorem 1 Kullback–Leibler divergence upper bound; finiteness of the divergence
+is not assumed. -/
 theorem kl_le_hellinger_add_tailPower (μ ν : Measure α)
     [IsFiniteMeasure μ] [IsFiniteMeasure ν] {c δ : ℝ} (hc : 1 < c) (hδ : 0 < δ) :
     kl μ ν ≤ ENNReal.ofReal (klUpperCoeff c) * hellingerSq μ ν +

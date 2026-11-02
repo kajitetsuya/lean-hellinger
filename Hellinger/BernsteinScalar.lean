@@ -186,7 +186,8 @@ theorem bernstein_density_upper {c δ x : ℝ} (hc : 1 < c) (hδ : 0 < δ)
       simpa only [powerTailDensityKernel, ite_eq_right htail, mul_zero, add_zero] using
         bernstein_density_regular_upper hδ.le hδ1 hxpos hxc
 
-/-- A variation primitive: the even exponential kernel dominates the square. -/
+/-- A primitive for the Kullback–Leibler variation bounds: the even exponential kernel dominates the
+square. -/
 theorem sq_le_expSymmKernel (t : ℝ) : t ^ 2 ≤ expSymmKernel t := by
   have hv0 : 0 ≤ |t| / 2 := div_nonneg (abs_nonneg _) (by norm_num)
   have hs := Real.self_le_sinh_iff.mpr hv0

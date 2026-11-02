@@ -8,7 +8,7 @@ module
 public import Hellinger.HellingerBridge
 public import Hellinger.Scalar
 
-/-! Measure-level Hellinger and KL comparisons. -/
+/-! Measure-level Hellinger and Kullback–Leibler divergence comparisons. -/
 
 @[expose] public section
 

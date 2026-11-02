@@ -9,7 +9,8 @@ public import Hellinger.Definitions
 public import Mathlib.Analysis.Convex.Integral
 public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 
-/-! Finite-KL centering of extended nonnegative log moments. -/
+/-! Centering of the extended nonnegative Kullback–Leibler variations under finite Kullback–Leibler
+divergence. -/
 
 public section
 
@@ -20,7 +21,8 @@ namespace Hellinger
 
 variable {α : Type*} [MeasurableSpace α]
 
-/-- For probabilities with finite KL, its real value is the integrable log-likelihood mean. -/
+/-- For probabilities with finite Kullback–Leibler divergence, its real value is the integrable
+log-likelihood mean. -/
 theorem kl_toReal_eq_integral_llr (μ ν : Measure α)
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (hKL : FiniteKL μ ν) :
     (kl μ ν).toReal = ∫ x, llr μ ν x ∂μ := by
@@ -47,8 +49,8 @@ theorem abs_sub_rpow_le_two_rpow_half_mul {k : ℝ} (hk : 1 ≤ k) (a b : ℝ) :
   exact (Real.rpow_le_rpow (abs_nonneg _)
     (by simpa only [Real.norm_eq_abs] using norm_sub_le a b) hk0).trans hmid
 
-/-- Jensen bounds the finite log-likelihood mean by the uncentered extended moment.
-No finite-moment hypothesis is needed in this statement. -/
+/-- Jensen bounds the finite log-likelihood mean by the uncentered extended Kullback–Leibler
+variation. No finite-moment hypothesis is needed in this statement. -/
 theorem abs_kl_toReal_rpow_le_logMoment (μ ν : Measure α)
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] {k : ℝ}
     (hk : 1 ≤ k) (hKL : FiniteKL μ ν) :
@@ -75,7 +77,8 @@ theorem abs_kl_toReal_rpow_le_logMoment (μ ν : Measure α)
     kl_toReal_eq_integral_llr μ ν hKL]
   exact ENNReal.ofReal_le_ofReal hr
 
-/-- The upper form of the centered comparison. The uncentered moment may be infinite. -/
+/-- The upper form of the centered comparison. The uncentered Kullback–Leibler variation may be
+infinite. -/
 theorem centeredLogMoment_le_two_rpow_logMoment (μ ν : Measure α)
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] {k : ℝ}
     (hk : 2 ≤ k) (hKL : FiniteKL μ ν) :
@@ -110,8 +113,9 @@ theorem centeredLogMoment_le_two_rpow_logMoment (μ ν : Measure α)
       mul_le_mul' le_rfl (add_le_add le_rfl hm)
     _ = _ := by rw [mul_add, ← add_mul, hcoeff]
 
-/-- The centered log-moment comparison with its exact coefficient `2^(-k)`.
-Finite KL is required only to define its real mean; no finite-moment assumption is imposed. -/
+/-- The centered Kullback–Leibler variation comparison with its exact coefficient `2^(-k)`.
+Finite Kullback–Leibler divergence is required only to define the real mean; no finite-moment
+assumption is imposed. -/
 theorem two_neg_rpow_mul_centeredLogMoment_le_logMoment (μ ν : Measure α)
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] {k : ℝ}
     (hk : 2 ≤ k) (hKL : FiniteKL μ ν) :

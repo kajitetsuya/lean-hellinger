@@ -5,7 +5,7 @@ The module [Hellinger/Sharp](../Hellinger/Sharp) proves the same bounds with the
 Each coefficient is at least as good as the paper's, and every bound of the paper is re-derived from its sharpened form (`*_of_sharp` in [Main.lean](../Hellinger/Sharp/Main.lean)).
 The coefficients and statements are in [Statements.lean](../Hellinger/Sharp/Statements.lean); "Sharp" in a declaration name marks this module, not a sharpness claim.
 
-Notation follows the [result map](Results.md): `q > 1` is the fixed cutoff, `J(q) = (1 − q^(−1/2))^(−2)`, `H²` is squared Hellinger distance, `K` is KL divergence, `Vₖ` the log moment, `Bδ²` the squared Bernstein functional, `Tδ(q)` the power tail and `Aₖ(q)` the log tail.
+Notation follows the [result map](Results.md): `q > 1` is the fixed cutoff, `J(q) = (1 − q^(−1/2))^(−2)`, `H²` is the squared Hellinger distance, `K` the Kullback–Leibler divergence, `Vₖ` the `k`th order Kullback–Leibler variation, `Bδ²` the squared Bernstein "norm", `Tδ(q)` the power tail and `Aₖ(q)` the log tail.
 
 ## Coefficients
 
@@ -29,9 +29,9 @@ The comparisons with the paper's coefficients are `Hellinger.Sharp.sharpCoeffs_i
 
 Each bound reduces to a pointwise inequality for the likelihood ratio `x = dP₀/dP`.
 
-- **Pointwise-sharp.** The KL upper, KL lower-tail, Bernstein lower and variation coefficients are the best constants in their pointwise inequalities.
-  - KL upper: `klFun(x)/(√x − 1)²` with `klFun(x) = x log x − x + 1`, maximized over `[0, q]` at `x = q`.
-  - KL lower tail: `klFun(x)/(x log x)`, with infimum over `x > q` approached as `x → q`.
+- **Pointwise-sharp.** The coefficients of the upper and lower-tail bounds on the Kullback–Leibler divergence, the lower bound on the Bernstein "norm" and the bound on the Kullback–Leibler variation are the best constants in their pointwise inequalities.
+  - Kullback–Leibler upper bound: `klFun(x)/(√x − 1)²` with `klFun(x) = x log x − x + 1`, maximized over `[0, q]` at `x = q`.
+  - Kullback–Leibler lower tail: `klFun(x)/(x log x)`, with infimum over `x > q` approached as `x → q`.
   - Bernstein lower: the ratio `2(1 − x^(−δ)(1 + δ log x))` is increasing in `x`.
   - Variation: on `(1, q]` the ratio `x |log x|^k/(√x − 1)²` is nondecreasing for `k ≥ 2`, and on `(0, 1)` it is bounded by `B_k`.
 

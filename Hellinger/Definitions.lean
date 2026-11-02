@@ -39,10 +39,11 @@ noncomputable def hellingerSq (μ ν : Measure α) : ℝ≥0∞ :=
     ((Real.sqrt (pairDensity μ ν x) -
       Real.sqrt ((ν.rnDeriv (pairMeasure μ ν) x).toReal)) ^ 2) ∂(pairMeasure μ ν)
 
-/-- KL divergence is exactly mathlib's extended nonnegative divergence. -/
+/-- The Kullback–Leibler divergence is exactly mathlib's extended nonnegative divergence. -/
 noncomputable def kl (μ ν : Measure α) : ℝ≥0∞ := InformationTheory.klDiv μ ν
 
-/-- The finite-KL domain used only for the centered-moment clause. -/
+/-- Finiteness of the Kullback–Leibler divergence, the domain used only for the centered
+Kullback–Leibler variation clause. -/
 def FiniteKL (μ ν : Measure α) : Prop := kl μ ν < ∞
 
 /-- The strictly truncated event. For `c > 1` its log-likelihood ratio is positive.
@@ -63,14 +64,16 @@ theorem bernsteinKernel_nonneg (δ l : ℝ) : 0 ≤ bernsteinKernel δ l := by
   dsimp [bernsteinKernel]
   linarith
 
-/-- The uncentered absolute log moment. For the specified positive-exponent domain,
-failure of absolute continuity contributes infinity rather than a totalized logarithm. -/
+/-- The `k`th order Kullback–Leibler variation `E_μ|log(dμ/dν)|^k`. For the specified
+positive-exponent domain, failure of absolute continuity contributes infinity rather than a
+totalized logarithm. -/
 noncomputable def logMoment (μ ν : Measure α) (k : ℝ) : ℝ≥0∞ := by
   classical
   exact if μ ≪ ν then ∫⁻ x, ENNReal.ofReal (|llr μ ν x| ^ k) ∂μ else ∞
 
-/-- The squared Bernstein functional. Its specified parameter domain is `0 < δ ≤ 1`;
-the infinite branch records positive `μ` mass where the likelihood denominator vanishes. -/
+/-- The squared Bernstein "norm" of `δ` times the log-likelihood ratio. Its specified
+parameter domain is `0 < δ ≤ 1`; the infinite branch records positive `μ` mass where the
+likelihood denominator vanishes. -/
 noncomputable def bernsteinSq (μ ν : Measure α) (δ : ℝ) : ℝ≥0∞ := by
   classical
   exact if μ ≪ ν then
@@ -94,9 +97,10 @@ noncomputable def tailLogMoment (μ ν : Measure α) (c k : ℝ) : ℝ≥0∞ :=
     ∫⁻ x in tailEvent μ ν c, ENNReal.ofReal ((llr μ ν x) ^ k) ∂μ
   else ∞
 
-/-- The centered absolute log moment on probability measures. An explicit finite-KL
-proof is required, so converting KL to a real number cannot erase an infinite mean.
-Finite KL makes the log-likelihood ratio integrable and its mean finite. -/
+/-- The `k`th order centered Kullback–Leibler variation on probability measures. An explicit proof
+of finite Kullback–Leibler divergence is required, so converting the divergence to a real number
+cannot erase an infinite mean. Finite Kullback–Leibler divergence makes the log-likelihood ratio
+integrable and its mean finite. -/
 noncomputable def centeredLogMoment (μ ν : Measure α)
     [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (k : ℝ)
     (_hKL : FiniteKL μ ν) : ℝ≥0∞ :=

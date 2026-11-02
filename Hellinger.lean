@@ -69,6 +69,7 @@ public import Hellinger.MLE.WeakLawShell
 public import Hellinger.MLE.WeakLawComparator
 public import Hellinger.MLE.WeakLawCorollaries
 public import Hellinger.MLE.Theorem8WeakLaw
+public import Hellinger.MLE.PrintedCounterexample
 public import Hellinger.Sharp.Statements
 public import Hellinger.Sharp.KL
 public import Hellinger.Sharp.Bernstein

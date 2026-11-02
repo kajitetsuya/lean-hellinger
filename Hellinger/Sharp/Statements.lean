@@ -15,23 +15,25 @@ bounds they give. The paper's statements keep their rounded coefficients;
 `SharpCoeffsImproveStatement` shows that each sharpened coefficient is at least as good, so
 every bound here implies the corresponding bound of the paper.
 
-The KL upper, KL lower-tail, Bernstein lower and variation coefficients are the best
-pointwise constants of their kernel inequalities on the relevant range. The others are
-improved but not claimed sharp: `(e δ)⁻¹` is pointwise best only when `δ log c ≤ 1`, and the
-`δ²` Bernstein upper, the interpolation and the CM coefficients are improvements. The
-arguments are summarized in `docs/SharpConstants.md`. "Sharp" in a declaration name marks this
-module, not a sharpness claim. With `J(c) = (1 - c^{-1/2})^{-2}` (`tailMassCoeff`):
+The Kullback–Leibler divergence upper and lower-tail, Bernstein "norm" lower and
+Kullback–Leibler variation coefficients are the best pointwise constants of their kernel
+inequalities on the relevant range. The others are improved but not claimed sharp: `(e δ)⁻¹`
+is pointwise best only when `δ log c ≤ 1`, and the `δ²` Bernstein "norm" upper, the
+interpolation and the CM coefficients are improvements. The arguments are summarized in
+`docs/SharpConstants.md`. "Sharp" in a declaration name marks this module, not a sharpness
+claim. With `J(c) = (1 - c^{-1/2})^{-2}` (`tailMassCoeff`):
 
-- KL upper: `K(c) = J(c) (log c - 1 + 1/c)`, which is `4 log 4 - 3 ≈ 2.545` at `c = 4`
-  (paper: `1 + √c`);
-- KL tail factor: `(e δ)⁻¹` (paper: `δ⁻¹`);
-- KL lower tail: `1 - (1 - 1/c)/log c`, about `0.459` at `c = 4` (paper:
-  `min(1/3, (1-1/c)/2)`);
-- Bernstein lower: `2(1 - c^{-δ}(1 + δ log c))`, for every `δ > 0`
+- Kullback–Leibler divergence upper: `K(c) = J(c) (log c - 1 + 1/c)`, which is
+  `4 log 4 - 3 ≈ 2.545` at `c = 4` (paper: `1 + √c`);
+- Kullback–Leibler divergence tail factor: `(e δ)⁻¹` (paper: `δ⁻¹`);
+- Kullback–Leibler divergence lower tail: `1 - (1 - 1/c)/log c`, about `0.459` at `c = 4`
+  (paper: `min(1/3, (1-1/c)/2)`);
+- Bernstein "norm" lower: `2(1 - c^{-δ}(1 + δ log c))`, for every `δ > 0`
   (paper: `(1 - c^{-δ})²`, for `δ ≤ 1`);
-- Bernstein upper: `2 δ² (1 + √c)²` for `δ ≤ 1` (paper: `2 δ (1 + √c)²`);
-- variation upper: `max(J(c) (log c)^k, B_k)` with `B_k` the supremum of the kernel ratio on
-  `(0, 1)`; at `k = 2` it is `J(c) (log c)²`, which is `16 (log 2)² ≈ 7.69` at `c = 4`;
+- Bernstein "norm" upper: `2 δ² (1 + √c)²` for `δ ≤ 1` (paper: `2 δ (1 + √c)²`);
+- Kullback–Leibler variation upper: `max(J(c) (log c)^k, B_k)` with `B_k` the supremum of the
+  kernel ratio on `(0, 1)`; at `k = 2` it is `J(c) (log c)²`, which is `16 (log 2)² ≈ 7.69`
+  at `c = 4`;
 - interpolation: `J(c)^{1 - k/k'}` (paper: `J(c)`);
 - CM ⇒ NC: `4 M²` at every cutoff `q ≥ 9/4` (paper: `(2M + 1)²` at `q = 4`).
 -/
@@ -47,10 +49,11 @@ universe u
 
 /-! ### Sharpened coefficients -/
 
-/-- `K(c) = J(c) (log c - 1 + 1/c)`, the sharp KL upper coefficient. -/
+/-- `K(c) = J(c) (log c - 1 + 1/c)`, the sharp Kullback–Leibler divergence upper coefficient. -/
 noncomputable def klSharpCoeff (c : ℝ) : ℝ := tailMassCoeff c * (Real.log c - 1 + 1 / c)
 
-/-- `1 - (1 - 1/c)/log c`, the sharp coefficient of the KL lower tail bound. -/
+/-- `1 - (1 - 1/c)/log c`, the sharp coefficient of the Kullback–Leibler divergence lower tail
+bound. -/
 noncomputable def klTailLowerSharpCoeff (c : ℝ) : ℝ := 1 - (1 - 1 / c) / Real.log c
 
 /-- `2 (1 - c^{-δ} (1 + δ log c))`, the sharp Bernstein lower coefficient. -/
@@ -64,7 +67,7 @@ noncomputable def bernsteinUpperSqCoeff (c δ : ℝ) : ℝ := 2 * δ ^ 2 * (1 + 
 noncomputable def variationLowerSup (k : ℝ) : ℝ :=
   ⨆ r : Set.Ioo (0 : ℝ) 1, (r : ℝ) * |Real.log r| ^ k / (Real.sqrt r - 1) ^ 2
 
-/-- `max(J(c) (log c)^k, B_k)`, the sharp variation upper coefficient. -/
+/-- `max(J(c) (log c)^k, B_k)`, the sharp Kullback–Leibler variation upper coefficient. -/
 noncomputable def variationSharpCoeff (c k : ℝ) : ℝ :=
   max (tailMassCoeff c * Real.log c ^ k) (variationLowerSup k)
 
@@ -73,7 +76,7 @@ noncomputable def interpolationSharpCoeff (c k k' : ℝ) : ℝ := tailMassCoeff 
 
 /-! ### Measure-level bounds -/
 
-/-- KL upper bound with the sharp coefficient. -/
+/-- Kullback–Leibler divergence upper bound with the sharp coefficient. -/
 def KLUpperSharpStatement : Prop :=
   ∀ {α : Type u} [MeasurableSpace α] (μ ν : Measure α) [IsFiniteMeasure μ] [IsFiniteMeasure ν]
     (c : ℝ), 1 < c →
@@ -84,14 +87,14 @@ def TailLogPowerSharpStatement : Prop :=
   ∀ {α : Type u} [MeasurableSpace α] (μ ν : Measure α) (c δ : ℝ), 0 < δ →
     tailLogMoment μ ν c 1 ≤ ENNReal.ofReal (Real.exp 1 * δ)⁻¹ * tailPower μ ν c δ
 
-/-- Theorem 1's KL upper bound with `K(c)` and `(e δ)⁻¹`. -/
+/-- Theorem 1's Kullback–Leibler divergence upper bound with `K(c)` and `(e δ)⁻¹`. -/
 def KLUpperPowerSharpStatement : Prop :=
   ∀ {α : Type u} [MeasurableSpace α] (μ ν : Measure α) [IsFiniteMeasure μ] [IsFiniteMeasure ν]
     (c δ : ℝ), 1 < c → 0 < δ →
       kl μ ν ≤ ENNReal.ofReal (klSharpCoeff c) * hellingerSq μ ν +
         ENNReal.ofReal (Real.exp 1 * δ)⁻¹ * tailPower μ ν c δ
 
-/-- KL lower tail bound with the sharp coefficient. -/
+/-- Kullback–Leibler divergence lower tail bound with the sharp coefficient. -/
 def KLLowerTailSharpStatement : Prop :=
   ∀ {α : Type u} [MeasurableSpace α] (μ ν : Measure α) [IsFiniteMeasure μ] [IsFiniteMeasure ν]
     (c : ℝ), 1 < c →
@@ -110,7 +113,7 @@ def BernsteinUpperSqStatement : Prop :=
       bernsteinSq μ ν δ ≤ ENNReal.ofReal (bernsteinUpperSqCoeff c δ) * hellingerSq μ ν +
         2 * tailPower μ ν c δ
 
-/-- Variation upper bound with the sharp coefficient, for every real `k ≥ 2`. -/
+/-- Kullback–Leibler variation upper bound with the sharp coefficient, for every real `k ≥ 2`. -/
 def VariationUpperSharpStatement : Prop :=
   ∀ {α : Type u} [MeasurableSpace α] (μ ν : Measure α) [IsFiniteMeasure μ] [IsFiniteMeasure ν]
     (c k : ℝ), 1 < c → 2 ≤ k →
@@ -153,8 +156,8 @@ def SharpCoeffsImproveStatement : Prop :=
     (∀ δ : ℝ, 0 < δ → (Real.exp 1 * δ)⁻¹ ≤ δ⁻¹) ∧
     (∀ M : ℝ, 0 ≤ M → 4 * M ^ 2 ≤ (2 * M + 1) ^ 2)
 
-/-- Closed forms: the values at the paper's cutoff `c = 4`, and the variation coefficient at
-`k = 2`. -/
+/-- Closed forms: the values at the paper's cutoff `c = 4`, and the Kullback–Leibler variation
+coefficient at `k = 2`. -/
 def SharpCoeffValuesStatement : Prop :=
   klSharpCoeff 4 = 4 * Real.log 4 - 3 ∧
   klTailLowerSharpCoeff 4 = 1 - 3 / (4 * Real.log 4) ∧

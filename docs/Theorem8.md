@@ -11,7 +11,7 @@ All definitions are in [Defs.lean](../Hellinger/MLE/Defs.lean).
 - **Densities.** One arbitrary reference measure `μ` on the sample space `𝒳`; no σ-finiteness is assumed. Densities are measurable functions `𝒳 → ℝ≥0` of mass one (`IsProbDensity`), and `P₀ = p₀ · μ`. Pointwise representatives are kept, so brackets, likelihoods and empirical suprema evaluate them pointwise.
 - **Hellinger distance.** `h(f, g) = (∫ (√f − √g)² dμ)^{1/2}`, with the paper's normalization and no factor `1/2`.
 - **Brackets and entropy.** Brackets have measurable endpoints and are ordered pointwise. The nonstandardized bracketing integral is `J̃_[](δ, F, d) = ∫₀^δ √(1 + log N_[](ε, F, d)) dε` in `[0, ∞]`; it is `∞` when some bracketing number is infinite.
-- **Bernstein functional.** `‖f‖²_{P,B} = 2 P(e^{|f|} − 1 − |f|)`. It is not a norm.
+- **The Bernstein "norm".** `‖f‖²_{P,B} = 2 P(e^{|f|} − 1 − |f|)` is the squared Bernstein "norm". It is neither homogeneous nor subadditive.
 - **Sample and estimator.** `X₁, X₂, …` are i.i.d. with law `P₀` on an arbitrary probability space. The sieve `𝒫_n` consists of probability densities; `p_n ∈ 𝒫_n` is deterministic. The estimator `p̂_n ∈ 𝒫_n` may be any, possibly nonmeasurable, map on the underlying probability space, in particular any function of the sample.
 - **Rates.** `a_n = max(δ_n, n^{−1/2})`. `Z_n = O_P^*(b_n)` means that for every `ε > 0` there are `K > 0` and `N` with outer probability of `{Z_n > K b_n}` at most `ε` for `n ≥ N`. Outer probability is the outer measure, and outer expectation is the infimum of integrals of measurable majorants.
 
@@ -28,11 +28,13 @@ The conclusion is `h(p₀, p̂_n) = O_P^*(a_n)`.
 The paper's entropy assumption `J̃_[](δ_n, 𝒫_{n,δ_n}, h) ≤ δ_n² √n`, at the single radius `δ_n`, does not suffice.
 The proof uses concavity of `r ↦ J̃_[](r, 𝒫_{n,r}, h)`, which holds for a fixed class but not when the class grows with `r`.
 
-**Counterexample** (not formalized). Let `p₀` be uniform on `[0, 1)`, split into `2n` equal cells, and let the sieve contain `p₀` and every density equal to `3/2` on exactly `n` cells and `1/2` on the others. Take `p_n = p₀` and `δ_n = n^{−1/2}`.
+**Counterexample.** Let `p₀` be uniform on `[0, 1)`, split into `2n` equal cells, and let the sieve contain `p₀` and every density equal to `3/2` on exactly `n` cells and `1/2` on the others. Take `p_n = p₀` and `δ_n = n^{−1/2}`.
 
 - Every other sieve member is at the fixed Hellinger distance `c = (2 − √(3/2) − √(1/2))^{1/2} > 0` from `p₀`.
 - For large `n` the local class at radius `δ_n` is `{p₀}`, so the entropy assumption holds; the approximation and log-tail terms vanish.
 - A sample of size `n` meets at most `n` cells, so an exact maximizer puts density `3/2` at every observation and stays at distance `c` from `p₀`.
+
+This is formalized as `Hellinger.MLE.printedTheorem8_false : ¬ PrintedTheorem8Statement` in [PrintedCounterexample.lean](../Hellinger/MLE/PrintedCounterexample.lean). `PrintedTheorem8Statement` is the article's theorem with the single-radius condition required for every `n`. Below a fixed sample size the sieve is `{p₀}`, so every hypothesis holds for every `n`. The estimator is an exact maximizer over the whole sieve (`estimator_isMLE`), and its Hellinger error is `c` on every sample point (`hdist_estimator`).
 
 The formal theorem replaces the entropy assumption with an **annular entropy-tail condition (D)**.
 With shells `s_{nj} = 2^{j/2} a_n` and annuli `A_{nj} = {p ∈ 𝒫_n : s_{nj} < h(p₀, p) ≤ √2 s_{nj}}`, let

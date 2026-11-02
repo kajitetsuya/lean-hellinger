@@ -11,7 +11,8 @@ public import Mathlib.InformationTheory.KullbackLeibler.KLFun
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
-/-! Forward-density KL kernels for nonnegative integration under the reference measure. -/
+/-! Forward-density Kullback–Leibler kernels for nonnegative integration under the reference
+measure. -/
 
 @[expose] public section
 

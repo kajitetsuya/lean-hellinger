@@ -43,7 +43,7 @@ noncomputable def variationUpperCoeff (c k : ℝ) : ℝ :=
 /-- The fixed-cutoff interpolation constant `C_I(c) = J(c)`. -/
 noncomputable def interpolationCoeff (c : ℝ) : ℝ := tailMassCoeff c
 
-/-- The coefficient of the centered-moment lower comparison. -/
+/-- The coefficient of the centered Kullback–Leibler variation lower comparison. -/
 noncomputable def centeredLowerCoeff (k : ℝ) : ℝ := (2 : ℝ) ^ (-k)
 
 theorem bernsteinLowerCoeff_pos {c δ : ℝ} (hc : 1 < c) (hδ : 0 < δ) :
@@ -135,7 +135,8 @@ theorem bernsteinUpperCoeff_four (δ : ℝ) : bernsteinUpperCoeff 4 δ = 18 * δ
 @[simp] theorem interpolationCoeff_four : interpolationCoeff 4 = 4 := by
   simp [interpolationCoeff]
 
-/-- The selected variation coefficient specializes to the paper's exact coefficient. -/
+/-- The selected Kullback–Leibler variation coefficient specializes to the paper's exact
+coefficient. -/
 theorem variationUpperCoeff_four (k : ℝ) :
     variationUpperCoeff 4 k =
       4 * max (2 * (Real.log 4) ^ (k - 2)) ((k / Real.exp 1) ^ k) := by

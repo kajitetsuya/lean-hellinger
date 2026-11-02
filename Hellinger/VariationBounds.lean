@@ -9,7 +9,8 @@ public import Hellinger.VariationScalar
 public import Hellinger.HellingerBridge
 public import Hellinger.TailIntegration
 
-/-! Theorem 2 variation bounds for arbitrary finite measures, including infinite moments. -/
+/-! Theorem 2 Kullback–Leibler variation bounds for arbitrary finite measures, including infinite
+moments. -/
 @[expose] public section
 
 open MeasureTheory
@@ -42,7 +43,8 @@ theorem tailLogMoment_le_logMoment {c : ℝ} (hc : 1 < c) (k : ℝ) :
       (variation_density_lower hc k (r := (μ.rnDeriv ν x).toReal) ENNReal.toReal_nonneg)
   · simp [tailLogMoment_of_not_ac h, logMoment_of_not_ac h]
 
-/-- Theorem 2's exact upper variation bound for every real exponent at least two. -/
+/-- Theorem 2's exact upper Kullback–Leibler variation bound for every real exponent at least
+two. -/
 theorem logMoment_le_hellinger_add_tailLogMoment {c k : ℝ} (hc : 1 < c) (hk : 2 ≤ k) :
     logMoment μ ν k ≤ ENNReal.ofReal (variationUpperCoeff c k) * hellingerSq μ ν +
       tailLogMoment μ ν c k := by

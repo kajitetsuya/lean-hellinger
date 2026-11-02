@@ -11,12 +11,13 @@ public import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
-/-! Scalar comparisons for the reverse-density KL kernel `x - 1 - log x` on `x > 0`. -/
+/-! Scalar comparisons for the reverse-density Kullback–Leibler kernel `x - 1 - log x` on
+`x > 0`. -/
 @[expose] public section
 
 namespace Hellinger
 
-/-- The reverse-density KL kernel dominates the squared Hellinger kernel. -/
+/-- The reverse-density Kullback–Leibler kernel dominates the squared Hellinger kernel. -/
 theorem sqrt_sub_one_sq_le_reverseKL {x : ℝ} (hx : 0 < x) :
     (Real.sqrt x - 1) ^ 2 ≤ x - 1 - Real.log x := by
   have hlog := Real.log_le_sub_one_of_pos (Real.sqrt_pos.mpr hx)
@@ -58,7 +59,7 @@ theorem two_mul_one_sub_div_le_neg_log {x : ℝ} (hx : 0 < x) (hx1 : x ≤ 1) :
   dsimp [q] at hzero
   linarith
 
-/-- On the strict cutoff tail, the reverse-density KL kernel controls the log tail. -/
+/-- On the strict cutoff tail, the reverse-density Kullback–Leibler kernel controls the log tail. -/
 theorem klTailLowerCoeff_mul_neg_log_le_reverseKL {c x : ℝ}
     (hc : 1 < c) (hx : 0 < x) (hxc : x < 1 / c) :
     klTailLowerCoeff c * (-Real.log x) ≤ x - 1 - Real.log x := by
@@ -76,7 +77,7 @@ theorem klTailLowerCoeff_mul_neg_log_le_reverseKL {c x : ℝ}
     exact (min_le_right _ _).trans (by linarith)
   exact (mul_le_mul_of_nonneg_right hcoeff hL).trans hphi
 
-/-- Derivative factorization for the upper-KL comparison gap. -/
+/-- Derivative factorization for the gap in the upper Kullback–Leibler kernel comparison. -/
 theorem hasDerivAt_klUpper_gap (a : ℝ) {u : ℝ} (hu : 0 < u) :
     HasDerivAt
       (fun v : ℝ ↦ (1 + a) * (v - 1) ^ 2 - (v ^ 2 - 1 - 2 * Real.log v))
@@ -137,7 +138,8 @@ theorem reverseKL_sq_le_mul_sq_sub_one {a u : ℝ}
   dsimp [D] at hmin
   linarith
 
-/-- On the closed regular region, the selected cutoff coefficient controls KL. -/
+/-- On the closed regular region, the selected cutoff coefficient controls the
+reverse-density Kullback–Leibler kernel. -/
 theorem reverseKL_le_klUpperCoeff {c x : ℝ} (hc : 1 < c) (hxc : 1 / c ≤ x) :
     x - 1 - Real.log x ≤ klUpperCoeff c * (Real.sqrt x - 1) ^ 2 := by
   have hc0 : 0 < c := lt_trans (by norm_num) hc

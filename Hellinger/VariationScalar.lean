@@ -10,12 +10,13 @@ public import Hellinger.PowerExponential
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
-/-! Real-exponent weighted variation comparisons and cutoff geometry. -/
+/-! Real-exponent weighted Kullback–Leibler variation comparisons and cutoff geometry. -/
 @[expose] public section
 
 namespace Hellinger
 
-/-- Forward density of the strictly truncated real log moment. -/
+/-- Forward density of the log tail, the strictly truncated real-order moment of the
+log-likelihood ratio. -/
 noncomputable def logMomentTailDensityKernel (c k r : ℝ) : ℝ :=
   if Real.log c < Real.log r then r * (Real.log r) ^ k else 0
 
@@ -46,7 +47,7 @@ theorem cutoffGap_sq_le_hellinger_of_le_inv {c r : ℝ} (hc : 1 < c)
   have hsq := pow_le_pow_left₀ (cutoffGap_pos hc).le hgap 2
   nlinarith
 
-/-- Reciprocal cutoff geometry, useful for both variation and interpolation. -/
+/-- Reciprocal cutoff geometry, useful for both the Kullback–Leibler variation and interpolation. -/
 theorem one_le_tailMassCoeff_mul_hellinger_of_le_inv {c r : ℝ} (hc : 1 < c)
     (hrr : r ≤ 1 / c) : 1 ≤ tailMassCoeff c * (Real.sqrt r - 1) ^ 2 := by
   have h := mul_le_mul_of_nonneg_left (cutoffGap_sq_le_hellinger_of_le_inv hc hrr)
@@ -117,7 +118,8 @@ theorem logMomentTailDensityKernel_nonneg {c k r : ℝ} (hc : 1 < c) (hr : 0 ≤
   · exact mul_nonneg hr (Real.rpow_nonneg ((Real.log_pos hc).trans ht).le _)
   · exact le_rfl
 
-/-- Restriction to the positive-log tail is bounded by the full absolute moment density. -/
+/-- Restriction to the positive-log tail is bounded by the full Kullback–Leibler variation
+density. -/
 theorem variation_density_lower {c r : ℝ} (hc : 1 < c) (k : ℝ) (hr : 0 ≤ r) :
     logMomentTailDensityKernel c k r ≤ r * |Real.log r| ^ k := by
   unfold logMomentTailDensityKernel
@@ -125,7 +127,7 @@ theorem variation_density_lower {c r : ℝ} (hc : 1 < c) (k : ℝ) (hr : 0 ≤ r
   · rw [abs_of_pos ((Real.log_pos hc).trans ht)]
   · exact mul_nonneg hr (Real.rpow_nonneg (abs_nonneg _) _)
 
-/-- The weighted scalar variation split, including zero density. -/
+/-- The weighted scalar Kullback–Leibler variation split, including zero density. -/
 theorem variation_density_upper {c k r : ℝ} (hc : 1 < c) (hk : 2 ≤ k) (hr : 0 ≤ r) :
     r * |Real.log r| ^ k ≤ variationUpperCoeff c k * (Real.sqrt r - 1) ^ 2 +
       logMomentTailDensityKernel c k r := by

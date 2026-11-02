@@ -12,7 +12,7 @@ public import Hellinger.MLE.Bracketing
 Entropy transfer for the mixture log-ratio criterion `m_f = log((p₀ + f)/(2 p₀))`.
 
 With `P₀ = p₀ · μ`:
-* every `m_f` with `∫ f dμ < ∞` has finite Bernstein size (`bernsteinFun_mixLog_lt_top`);
+* every `m_f` with `∫ f dμ < ∞` has finite Bernstein "norm" (`bernsteinFun_mixLog_lt_top`);
 * `‖m_u - m_l‖²_{P₀,B} ≤ 6 h²(l, u)` (`bernsteinFunSq_mixLog_sub_le`), hence
   `‖m_u - m_l‖_{P₀,B} ≤ √6 h(l, u)` (`bernsteinFun_mixLog_sub_le`);
 * Hellinger `ε`-brackets of `F` map to Bernstein `3ε`-brackets of `{m_p : p ∈ F}`, so
@@ -144,7 +144,7 @@ theorem mul_bernsteinKernel_log_ratio_le {a u l : ℝ} (ha : 0 < a) (hl : 0 ≤ 
   · rw [← bernsteinKernel_one_neg, neg_sub]
     exact mul_bernsteinKernel_log_ratio_le_of_le ha hu hul
 
-/-! ### Bernstein sizes of the criterion -/
+/-! ### Bernstein "norms" of the criterion -/
 
 variable {𝒳 : Type*} [MeasurableSpace 𝒳]
 
@@ -181,7 +181,7 @@ theorem bernsteinFunSq_mixLog_le_mass {μ : Measure 𝒳} {p₀ : 𝒳 → ℝ�
           lintegral_const_mul _ hp₀.measurable.coe_nnreal_ennreal]
     _ = 5 + ∫⁻ x, (f x : ℝ≥0∞) ∂μ := by rw [hp₀.lintegral_eq_one, mul_one]
 
-/-- (a) Admissibility: `m_f` has finite Bernstein size when `∫ f dμ < ∞`. -/
+/-- (a) Admissibility: `m_f` has finite Bernstein "norm" when `∫ f dμ < ∞`. -/
 theorem bernsteinFun_mixLog_lt_top {μ : Measure 𝒳} {p₀ : 𝒳 → ℝ≥0} (hp₀ : IsProbDensity μ p₀)
     {f : 𝒳 → ℝ≥0} (hf : ∫⁻ x, (f x : ℝ≥0∞) ∂μ < ∞) :
     bernsteinFun (law μ p₀) (mixLog p₀ f) < ∞ := by

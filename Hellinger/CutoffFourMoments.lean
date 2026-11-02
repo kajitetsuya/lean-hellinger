@@ -8,7 +8,7 @@ module
 public import Hellinger.VariationBounds
 public import Hellinger.Interpolation
 
-/-! Cutoff-four corollaries for real log moments and interpolation. -/
+/-! Cutoff-four corollaries for real-order Kullback–Leibler variations and interpolation. -/
 
 @[expose] public section
 

@@ -11,7 +11,7 @@ public import Hellinger.MLE.DensityBridge
 /-!
 Mixture geometry for the criterion `m_p = log((p₀ + p)/(2 p₀))`:
 * `h(p₀, q_p)² ≤ ½ h(p₀, p)²` and `h(p₀, p)²/16 ≤ h(p₀, q_p)²` for `q_p = (p₀ + p)/2`;
-* the Bernstein size `‖m_p‖_{P₀,B} ≤ 3 h(p₀, p)`;
+* the Bernstein "norm" `‖m_p‖_{P₀,B} ≤ 3 h(p₀, p)`;
 * the curvature `P₀ m_p ≤ -h(p₀, p)²/16`.
 The lower mixture constant `1/16` replaces the paper's `(1 - 1/√2)²`; any positive constant
 serves the shell argument.
@@ -158,7 +158,7 @@ theorem hellingerFunSq_ne_top (μ : Measure 𝒳) {p q : 𝒳 → ℝ≥0} (hp :
     (hq : IsProbDensity μ q) : hellingerFunSq μ p q ≠ ⊤ :=
   ne_top_of_le_ne_top (by simp) (hellingerFunSq_le_two μ hp hq)
 
-/-! ### The Bernstein size of `m_p` -/
+/-! ### The Bernstein "norm" of `m_p` -/
 
 /-- `P₀`-integrals against the law are `μ`-integrals with the factor `p₀`. -/
 theorem lintegral_law {μ : Measure 𝒳} {p₀ : 𝒳 → ℝ≥0} (hp₀ : Measurable p₀) {g : 𝒳 → ℝ≥0∞}

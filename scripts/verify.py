@@ -19,10 +19,11 @@ import subprocess
 import sys
 
 ARTICLE_DOI = "10.1007/s42973-026-00243-x"
+LIBRARY = "Hellinger"
 LEAN_TOOLCHAIN = "leanprover/lean4:v4.35.0"
 LEAN_VERSION = "4.35.0"
-VERSION = "0.1.0"
-MODULE_COUNT = 88
+VERSION = "0.2.0"
+MODULE_COUNT = 89
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 DEPENDENCY_PINS = {
     "mathlib": "56a005855ea17e0b0958f73ec801ae140b0a1679",
@@ -36,55 +37,56 @@ DEPENDENCY_PINS = {
     "Cli": "c24fe6078c630e89b489bffe59b3e20ac30d12c8",
 }
 MAIN_DECLARATIONS = {
+    "Hellinger.Comparison.Examples.CMSeparation.cm_family_separation",
+    "Hellinger.Comparison.Examples.FMSeparation.fm_family_separation",
+    "Hellinger.Comparison.Examples.Normal.normal_location_fails_ub",
+    "Hellinger.Comparison.Examples.Normal.uniform_conditionalMoment_normalFamily",
+    "Hellinger.Comparison.Examples.Power.fractional_nc_without_full_moment",
+    "Hellinger.Comparison.Examples.Power.power_density_separation",
+    "Hellinger.Comparison.Summary.forward_implications",
+    "Hellinger.Comparison.conditionalMoment_lt_top_of_tailPower_one_lt_top",
+    "Hellinger.Comparison.fullRatioMoment_le_tailPower_add_sqrt_hellinger",
+    "Hellinger.Comparison.kl_and_logMoment_le_of_ws",
+    "Hellinger.Comparison.tailLogMoment_le_of_ws",
+    "Hellinger.Comparison.tailPower_interpolation",
+    "Hellinger.Comparison.tailPower_mono_exponent",
+    "Hellinger.Comparison.tailPower_one_le_of_conditionalMoment_le",
+    "Hellinger.Comparison.uniform_conditionalMoment_of_uniform_ratio_representative_bound",
+    "Hellinger.Comparison.uniform_fullRatioMoment_of_uniform_tailPower_one",
+    "Hellinger.Comparison.uniform_tailPower_of_larger_exponent",
+    "Hellinger.MLE.External.vdw_2_14_18_prime",
+    "Hellinger.MLE.nonvacuous_nondegenerate",
+    "Hellinger.MLE.printedTheorem8_false",
+    "Hellinger.MLE.theorem8_firstMoment_unconditional",
+    "Hellinger.MLE.theorem8_of_powerEnvelope_unconditional",
+    "Hellinger.MLE.theorem8_of_weakLaw",
+    "Hellinger.MLE.theorem8_of_wholeSieve_unconditional",
+    "Hellinger.MLE.theorem8_unconditional",
+    "Hellinger.MLE.theorem8_weakLaw_unconditional",
+    "Hellinger.Sharp.bernsteinLowerSharpCoeff_mul_tailPower_le_bernsteinSq",
+    "Hellinger.Sharp.bernsteinSq_le_hellinger_add_tailPower_sq",
+    "Hellinger.Sharp.klTailLowerSharpCoeff_mul_tailLogMoment_le_kl",
+    "Hellinger.Sharp.kl_le_hellinger_add_tailLogMoment_sharp",
+    "Hellinger.Sharp.kl_le_hellinger_add_tailPower_sharp",
+    "Hellinger.Sharp.logMoment_le_hellinger_add_tailLogMoment_sharp",
+    "Hellinger.Sharp.sharpCoeffs_improve",
+    "Hellinger.Sharp.tailLogMoment_interpolation_sharp",
+    "Hellinger.Sharp.tailPower_le_of_conditionalMoment_le_sharp",
     "Hellinger.bernsteinLowerCoeff_mul_tailPower_le_bernsteinSq",
     "Hellinger.bernsteinSq_le_hellinger_add_tailPower",
     "Hellinger.hellingerSq_le_kl",
-    "Hellinger.kl_le_hellinger_add_tailPower",
-    "Hellinger.two_neg_rpow_mul_centeredLogMoment_le_logMoment",
-    "Hellinger.logMoment_le_gamma_bernsteinSq",
     "Hellinger.klTailLowerCoeff_mul_tailLogMoment_le_kl",
     "Hellinger.kl_le_hellinger_add_tailLogMoment",
-    "Hellinger.tailLogMoment_le_logMoment",
+    "Hellinger.kl_le_hellinger_add_tailPower",
+    "Hellinger.logMoment_le_gamma_bernsteinSq",
     "Hellinger.logMoment_le_hellinger_add_tailLogMoment",
     "Hellinger.tailLogMoment_interpolation",
+    "Hellinger.tailLogMoment_le_logMoment",
+    "Hellinger.two_neg_rpow_mul_centeredLogMoment_le_logMoment",
     "Hellinger.uniform_bernsteinSq_iff_tailPower",
     "Hellinger.uniform_kl_iff_tailLogMoment",
     "Hellinger.uniform_logMoment_iff_tailLogMoment",
-    "Hellinger.Comparison.tailPower_mono_exponent",
-    "Hellinger.Comparison.tailPower_interpolation",
-    "Hellinger.Comparison.uniform_tailPower_of_larger_exponent",
-    "Hellinger.Comparison.Examples.Power.power_density_separation",
     "Hellinger.uniform_ws_iff_tailPower",
-    "Hellinger.Comparison.tailLogMoment_le_of_ws",
-    "Hellinger.Comparison.kl_and_logMoment_le_of_ws",
-    "Hellinger.Comparison.tailPower_one_le_of_conditionalMoment_le",
-    "Hellinger.Comparison.conditionalMoment_lt_top_of_tailPower_one_lt_top",
-    "Hellinger.Comparison.Examples.CMSeparation.cm_family_separation",
-    "Hellinger.Comparison.uniform_conditionalMoment_of_uniform_ratio_representative_bound",
-    "Hellinger.Comparison.Examples.Normal.normal_location_fails_ub",
-    "Hellinger.Comparison.Examples.Normal.uniform_conditionalMoment_normalFamily",
-    "Hellinger.Comparison.uniform_fullRatioMoment_of_uniform_tailPower_one",
-    "Hellinger.Comparison.fullRatioMoment_le_tailPower_add_sqrt_hellinger",
-    "Hellinger.Comparison.Examples.Power.fractional_nc_without_full_moment",
-    "Hellinger.Comparison.Examples.FMSeparation.fm_family_separation",
-    "Hellinger.Comparison.Summary.forward_implications",
-    "Hellinger.MLE.theorem8_unconditional",
-    "Hellinger.MLE.theorem8_of_powerEnvelope_unconditional",
-    "Hellinger.MLE.theorem8_of_wholeSieve_unconditional",
-    "Hellinger.MLE.External.vdw_2_14_18_prime",
-    "Hellinger.MLE.theorem8_weakLaw_unconditional",
-    "Hellinger.MLE.theorem8_firstMoment_unconditional",
-    "Hellinger.MLE.theorem8_of_weakLaw",
-    "Hellinger.MLE.nonvacuous_nondegenerate",
-    "Hellinger.Sharp.kl_le_hellinger_add_tailLogMoment_sharp",
-    "Hellinger.Sharp.kl_le_hellinger_add_tailPower_sharp",
-    "Hellinger.Sharp.klTailLowerSharpCoeff_mul_tailLogMoment_le_kl",
-    "Hellinger.Sharp.bernsteinLowerSharpCoeff_mul_tailPower_le_bernsteinSq",
-    "Hellinger.Sharp.bernsteinSq_le_hellinger_add_tailPower_sq",
-    "Hellinger.Sharp.logMoment_le_hellinger_add_tailLogMoment_sharp",
-    "Hellinger.Sharp.tailLogMoment_interpolation_sharp",
-    "Hellinger.Sharp.tailPower_le_of_conditionalMoment_le_sharp",
-    "Hellinger.Sharp.sharpCoeffs_improve",
 }
 MODULE_PATTERN = r"[A-Za-z_][A-Za-z_0-9]*(?:\.[A-Za-z_][A-Za-z_0-9]*)*"
 DECLARATION_PATTERN = r"[A-Za-z_][A-Za-z_0-9']*(?:\.[A-Za-z_][A-Za-z_0-9']*)*"
@@ -173,7 +175,7 @@ def verify_snapshot(root: Path, expected: dict | None = None) -> dict:
                 f"Excluded path in snapshot: {relative}")
         require(isinstance(sha, str) and re.fullmatch(r"[0-9A-F]{64}", sha) is not None,
                 f"Malformed SHA256: {relative}")
-    required = {"lean-toolchain", "lake-manifest.json", "lakefile.toml", "Hellinger.lean",
+    required = {"lean-toolchain", "lake-manifest.json", "lakefile.toml", LIBRARY + ".lean",
                 "declarations.json", "scripts/verify.py"}
     require(required <= set(hashes), "Snapshot omits required package files")
     actual = distributable_files(root)
@@ -230,10 +232,10 @@ def project_modules(artifacts: set[str]) -> list[str]:
         module = path[:-5].replace("/", ".")
         require(re.fullmatch(MODULE_PATTERN, module) is not None,
                 f"Unsupported local Lean module path: {path}")
-        require(module == "Hellinger" or module.startswith("Hellinger."),
-                f"Module is outside the Hellinger library: {module}")
+        require(module == LIBRARY or module.startswith(LIBRARY + "."),
+                f"Module is outside the {LIBRARY} library: {module}")
         modules.append(module)
-    require(len(modules) == MODULE_COUNT and "Hellinger" in modules,
+    require(len(modules) == MODULE_COUNT and LIBRARY in modules,
             "Local Lean module inventory changed")
     return modules
 
@@ -299,7 +301,7 @@ def local_import_order(root: Path, modules: list[str]) -> list[str]:
                 match = pattern.fullmatch(line)
                 require(match is not None, f"Unsupported import syntax in {module}")
                 imported = match.group(1)
-                if imported == "Hellinger" or imported.startswith("Hellinger."):
+                if imported == LIBRARY or imported.startswith(LIBRARY + "."):
                     require(imported in module_set, f"Missing local import: {imported}")
                     dependencies[module].add(imported)
     order, visited, active = [], set(), set()
@@ -487,7 +489,7 @@ def verify(root: Path, write_report: bool = True) -> dict:
             print(f"Building {index}/{len(order)}: {module}", flush=True)
             runner.run([str(lake), "build", "+" + module + ":olean"], "Build " + module)
     public_path = root / ".lake" / "PublicTargets.lean"
-    public_path.write_text("import Hellinger\n" + "\n".join(
+    public_path.write_text("import " + LIBRARY + "\n" + "\n".join(
         "#check " + name for name in sorted(targets)) + "\n", encoding="utf-8", newline="\n")
     runner.run([str(lake), "env", "lean", str(public_path)], "Public declaration checks")
     audit_path = root / ".lake" / "ExportAxioms.lean"

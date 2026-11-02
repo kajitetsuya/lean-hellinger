@@ -11,10 +11,10 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
 /-!
-Sharpened KL constants: the KL upper bound with `K(c) = J(c) (log c - 1 + 1/c)`, the
-log-to-power tail factor `(e δ)⁻¹`, and the KL lower tail bound with `1 - (1 - 1/c)/log c`.
-The KL upper and lower-tail coefficients are pointwise sharp; `(e δ)⁻¹` improves the paper's
-`δ⁻¹`. The arguments are summarized in `docs/SharpConstants.md`.
+Sharpened Kullback–Leibler divergence constants: the upper bound with
+`K(c) = J(c) (log c - 1 + 1/c)`, the log-to-power tail factor `(e δ)⁻¹`, and the lower tail
+bound with `1 - (1 - 1/c)/log c`. The upper and lower-tail coefficients are pointwise sharp;
+`(e δ)⁻¹` improves the paper's `δ⁻¹`. The arguments are summarized in `docs/SharpConstants.md`.
 -/
 
 @[expose] public section
@@ -104,7 +104,8 @@ theorem two_le_klSharpCoeff {c : ℝ} (hc : 1 < c) : 2 ≤ klSharpCoeff c := by
 theorem klSharpCoeff_pos {c : ℝ} (hc : 1 < c) : 0 < klSharpCoeff c :=
   lt_of_lt_of_le (by norm_num) (two_le_klSharpCoeff hc)
 
-/-- The sharp KL upper coefficient is no larger than the paper's `1 + √c`. -/
+/-- The sharp Kullback–Leibler divergence upper coefficient is no larger than the paper's
+`1 + √c`. -/
 theorem klSharpCoeff_le_klUpperCoeff {c : ℝ} (hc : 1 < c) :
     klSharpCoeff c ≤ klUpperCoeff c := by
   have hc0 : 0 < c := lt_trans (by norm_num) hc
@@ -146,7 +147,7 @@ theorem klTailLowerSharpCoeff_four :
   unfold klTailLowerSharpCoeff
   rw [show (1 - 1 / 4 : ℝ) = 3 / 4 by norm_num, div_div]
 
-/-! ### The KL upper kernel -/
+/-! ### The Kullback–Leibler upper kernel -/
 
 /-- The upper comparison in square-root coordinates on `[t₀, ∞)`, given at `t₀`. -/
 theorem reverseKL_sq_le_mul_sq_sub_one_of_ge {a t₀ u : ℝ} (ha : 1 ≤ a) (ht₀ : 0 < t₀)
@@ -178,7 +179,8 @@ theorem reverseKL_sq_le_mul_sq_sub_one_of_ge {a t₀ u : ℝ} (ha : 1 ≤ a) (ht
     simp only [D] at h
     linarith
 
-/-- On `[1/c, ∞)`, the reverse-density KL kernel is bounded with the sharp coefficient. -/
+/-- On `[1/c, ∞)`, the reverse-density Kullback–Leibler kernel is bounded with the sharp
+coefficient. -/
 theorem reverseKL_le_klSharpCoeff {c y : ℝ} (hc : 1 < c) (hy : 1 / c ≤ y) :
     y - 1 - Real.log y ≤ klSharpCoeff c * (Real.sqrt y - 1) ^ 2 := by
   have hc0 : 0 < c := lt_trans (by norm_num) hc
@@ -207,7 +209,7 @@ theorem reverseKL_le_klSharpCoeff {c y : ℝ} (hc : 1 < c) (hy : 1 / c ≤ y) :
   rw [Real.sq_sqrt hy0.le, Real.log_sqrt hy0.le, add_sub_cancel] at h
   linarith
 
-/-- The sharp pointwise KL upper kernel on `[0, c]`. -/
+/-- The sharp pointwise Kullback–Leibler upper kernel on `[0, c]`. -/
 theorem klFun_le_klSharpCoeff_mul_hellinger {c x : ℝ} (hc : 1 < c) (hx : 0 ≤ x)
     (hxc : x ≤ c) :
     InformationTheory.klFun x ≤ klSharpCoeff c * (Real.sqrt x - 1) ^ 2 := by
@@ -225,7 +227,7 @@ theorem klFun_le_klSharpCoeff_mul_hellinger {c x : ℝ} (hc : 1 < c) (hx : 0 ≤
       _ = klSharpCoeff c * (x * (Real.sqrt x⁻¹ - 1) ^ 2) := by ring
       _ = klSharpCoeff c * (Real.sqrt x - 1) ^ 2 := by rw [mul_inverse_hellinger_kernel hx]
 
-/-- The sharp pointwise KL upper kernel with the log tail, on `[0, ∞)`. -/
+/-- The sharp pointwise Kullback–Leibler upper kernel with the log tail, on `[0, ∞)`. -/
 theorem klFun_le_klSharp_hellinger_add_logTail {c x : ℝ} (hc : 1 < c) (hx : 0 ≤ x) :
     InformationTheory.klFun x ≤
       klSharpCoeff c * (Real.sqrt x - 1) ^ 2 + logTailDensityKernel c x := by
@@ -246,7 +248,7 @@ theorem klFun_le_klSharp_hellinger_add_logTail {c x : ℝ} (hc : 1 < c) (hx : 0 
       simpa only [logTailDensityKernel, ht, ↓reduceIte, add_zero] using
         klFun_le_klSharpCoeff_mul_hellinger hc hx.le hxc
 
-/-! ### The KL lower tail kernel -/
+/-! ### The Kullback–Leibler lower tail kernel -/
 
 /-- `(1 - 1/x) log c ≤ (1 - 1/c) log x` for `1 < c ≤ x`. -/
 theorem one_sub_inv_mul_log_le {c x : ℝ} (hc : 1 < c) (hcx : c ≤ x) :
@@ -279,7 +281,7 @@ theorem one_sub_inv_mul_log_le {c x : ℝ} (hc : 1 < c) (hcx : c ≤ x) :
   simp only [one_div] at h ⊢
   linarith
 
-/-- The sharp pointwise KL lower tail kernel on `[0, ∞)`. -/
+/-- The sharp pointwise Kullback–Leibler lower tail kernel on `[0, ∞)`. -/
 theorem klTailLowerSharpCoeff_mul_logTail_le_klFun {c x : ℝ} (hc : 1 < c) (hx : 0 ≤ x) :
     klTailLowerSharpCoeff c * logTailDensityKernel c x ≤ InformationTheory.klFun x := by
   by_cases ht : Real.log c < Real.log x
@@ -313,7 +315,8 @@ theorem klTailLowerSharpCoeff_mul_logTail_le_klFun {c x : ℝ} (hc : 1 < c) (hx 
 
 /-! ### Measure-level bounds -/
 
-/-- KL is bounded by `K(c)` times squared Hellinger distance plus the strict log tail. -/
+/-- The Kullback–Leibler divergence is bounded by `K(c)` times squared Hellinger distance plus the
+strict log tail. -/
 theorem kl_le_hellinger_add_tailLogMoment_sharp : KLUpperSharpStatement.{u} := by
   intro α _ μ ν _ _ c hc
   by_cases h : μ ≪ ν
@@ -380,13 +383,14 @@ theorem tailLogMoment_one_le_tailPower_sharp : TailLogPowerSharpStatement.{u} :=
   · rw [tailLogMoment_of_not_ac h, tailPower_of_not_ac h]
     rw [ENNReal.mul_top (ENNReal.ofReal_pos.mpr hpos).ne']
 
-/-- Theorem 1's KL upper bound with `K(c)` and `(e δ)⁻¹`. -/
+/-- Theorem 1's Kullback–Leibler divergence upper bound with `K(c)` and `(e δ)⁻¹`. -/
 theorem kl_le_hellinger_add_tailPower_sharp : KLUpperPowerSharpStatement.{u} := by
   intro α _ μ ν _ _ c δ hc hδ
   exact (kl_le_hellinger_add_tailLogMoment_sharp μ ν c hc).trans
     (add_le_add_right (tailLogMoment_one_le_tailPower_sharp μ ν c δ hδ) _)
 
-/-- The cutoff log tail is controlled by KL with the sharp coefficient. -/
+/-- The cutoff log tail is controlled by the Kullback–Leibler divergence with the sharp
+coefficient. -/
 theorem klTailLowerSharpCoeff_mul_tailLogMoment_le_kl : KLLowerTailSharpStatement.{u} := by
   intro α _ μ ν _ _ c hc
   by_cases h : μ ≪ ν

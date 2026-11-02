@@ -15,7 +15,7 @@ public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 /-!
 # Mgf maximal inequality for finitely many empirical processes
 
-With `φ(x) = eˣ - 1 - x`, facts about the Bernstein functional `‖g‖²_B = 2 P φ(|g|)`:
+With `φ(x) = eˣ - 1 - x`, facts about the squared Bernstein "norm" `‖g‖²_B = 2 P φ(|g|)`:
 (B1) monotonicity, (B2) `P g² ≤ ‖g‖²_B`, (B3) `φ(λx) ≤ λ² φ(x)` for `0 ≤ λ ≤ 1`, and
 (B4) `eᵘ - 1 - u ≤ φ(|u|)`; Lemma G, the one-variable mgf bounds; and Lemma M*, the
 log-sum-exp maximal inequality for finitely many empirical processes. These replace
@@ -110,7 +110,7 @@ theorem exp_le_of_abs_le_one {u : ℝ} (hu : |u| ≤ 1) :
   rw [sq_abs] at h2
   linarith
 
-/-! ### The Bernstein functional: (B1) and (B2) -/
+/-! ### The Bernstein "norm": (B1) and (B2) -/
 
 variable {𝒳 : Type*} [MeasurableSpace 𝒳]
 
@@ -118,7 +118,7 @@ theorem measurable_bernsteinKernel_comp {g : 𝒳 → ℝ} (hg : Measurable g) :
     Measurable fun y ↦ bernsteinKernel 1 (g y) := by
   unfold bernsteinKernel; fun_prop
 
-/-- (B1) monotonicity of the Bernstein functional. -/
+/-- (B1) monotonicity of the squared Bernstein "norm". -/
 theorem bernsteinFunSq_mono (P : Measure 𝒳) {g h : 𝒳 → ℝ} (hgh : ∀ x, |g x| ≤ |h x|) :
     Hellinger.MLE.bernsteinFunSq P g ≤ Hellinger.MLE.bernsteinFunSq P h := by
   unfold Hellinger.MLE.bernsteinFunSq
@@ -127,7 +127,7 @@ theorem bernsteinFunSq_mono (P : Measure 𝒳) {g h : 𝒳 → ℝ} (hgh : ∀ x
   simp only [one_mul]
   linarith [exp_sub_mono (abs_nonneg (g x)) (hgh x)]
 
-/-- The Bernstein functional of `-g` equals that of `g`. -/
+/-- The squared Bernstein "norm" of `-g` equals that of `g`. -/
 theorem bernsteinFunSq_neg (P : Measure 𝒳) (g : 𝒳 → ℝ) :
     Hellinger.MLE.bernsteinFunSq P (fun x ↦ -g x) = Hellinger.MLE.bernsteinFunSq P g := by
   unfold Hellinger.MLE.bernsteinFunSq bernsteinKernel
@@ -138,7 +138,7 @@ theorem lintegral_sq_le_bernsteinFunSq (P : Measure 𝒳) (g : 𝒳 → ℝ) :
     ∫⁻ x, ENNReal.ofReal (g x ^ 2) ∂P ≤ Hellinger.MLE.bernsteinFunSq P g :=
   lintegral_mono fun x ↦ ENNReal.ofReal_le_ofReal (sq_le_bernsteinKernel (g x))
 
-/-- Finite Bernstein functional gives an integrable kernel. -/
+/-- A finite squared Bernstein "norm" gives an integrable kernel. -/
 theorem integrable_bernsteinKernel_comp (P : Measure 𝒳) {g : 𝒳 → ℝ} (hg : Measurable g)
     (hfin : Hellinger.MLE.bernsteinFunSq P g < ⊤) :
     Integrable (fun y ↦ bernsteinKernel 1 (g y)) P :=
@@ -150,7 +150,7 @@ theorem integral_bernsteinKernel_comp (P : Measure 𝒳) {g : 𝒳 → ℝ} (hg 
   integral_eq_lintegral_of_nonneg_ae (ae_of_all _ fun _ ↦ bernsteinKernel_nonneg _ _)
     (measurable_bernsteinKernel_comp hg).aestronglyMeasurable
 
-/-- (B2), integrability: finite Bernstein functional implies `g ∈ L²(P)`. -/
+/-- (B2), integrability: a finite squared Bernstein "norm" implies `g ∈ L²(P)`. -/
 theorem memLp_two_of_bernsteinFunSq_lt_top (P : Measure 𝒳) {g : 𝒳 → ℝ} (hg : Measurable g)
     (hfin : Hellinger.MLE.bernsteinFunSq P g < ⊤) : MemLp g 2 P := by
   rw [memLp_two_iff_integrable_sq hg.aestronglyMeasurable]
@@ -158,7 +158,7 @@ theorem memLp_two_of_bernsteinFunSq_lt_top (P : Measure 𝒳) {g : 𝒳 → ℝ}
   rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
   exact sq_le_bernsteinKernel _
 
-/-- (B2), real form: `∫ g² ≤ ‖g‖²_B` when the Bernstein functional is finite. -/
+/-- (B2), real form: `∫ g² ≤ ‖g‖²_B` when the squared Bernstein "norm" is finite. -/
 theorem integral_sq_le_bernsteinFunSq (P : Measure 𝒳) {g : 𝒳 → ℝ} (hg : Measurable g)
     (hfin : Hellinger.MLE.bernsteinFunSq P g < ⊤) :
     ∫ x, g x ^ 2 ∂P ≤ (Hellinger.MLE.bernsteinFunSq P g).toReal := by
@@ -167,7 +167,7 @@ theorem integral_sq_le_bernsteinFunSq (P : Measure 𝒳) {g : 𝒳 → ℝ} (hg 
     (memLp_two_of_bernsteinFunSq_lt_top P hg hfin))
     (integrable_bernsteinKernel_comp P hg hfin) fun y ↦ sq_le_bernsteinKernel _
 
-/-- Finite Bernstein functional implies integrability. -/
+/-- A finite squared Bernstein "norm" implies integrability. -/
 theorem integrable_of_bernsteinFunSq_lt_top (P : Measure 𝒳) [IsFiniteMeasure P] {g : 𝒳 → ℝ}
     (hg : Measurable g) (hfin : Hellinger.MLE.bernsteinFunSq P g < ⊤) : Integrable g P :=
   (memLp_two_of_bernsteinFunSq_lt_top P hg hfin).integrable (by norm_num)
@@ -495,7 +495,7 @@ theorem bound_le_of_log_two_mul {m σ T : ℝ} (hm : 1 ≤ m) (hσ : 0 < σ) (hT
 
 /-! ### Lemma M* for the empirical process -/
 
-/-- Lemma M* (a): Bernstein-functional bound. -/
+/-- Lemma M* (a): bound under a squared Bernstein "norm" condition. -/
 theorem lintegral_iSup_empiricalProcess_le_of_bernstein {ι : Type*} [Fintype ι] [Nonempty ι]
     (g : ι → 𝒳 → ℝ) (hg : ∀ i, Measurable (g i)) {σ : ℝ} (hσ : 0 < σ)
     (hB : ∀ i, Hellinger.MLE.bernsteinFunSq P (g i) ≤ ENNReal.ofReal (σ ^ 2)) {n : ℕ}

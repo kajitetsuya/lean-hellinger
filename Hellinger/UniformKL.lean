@@ -8,7 +8,8 @@ module
 public import Hellinger.Uniform
 public import Hellinger.KLBounds
 
-/-! The KL uniform-family equivalence for each fixed cutoff greater than one. -/
+/-! The Kullback–Leibler divergence uniform-family equivalence for each fixed cutoff greater than
+one. -/
 
 @[expose] public section
 

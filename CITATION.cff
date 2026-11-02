@@ -2,15 +2,15 @@ cff-version: 1.2.0
 message: "Please cite the accompanying article when using these formalizations."
 type: software
 title: 'Lean Formalization of "The Hellinger Bounds on the Kullback–Leibler Divergence and the Bernstein Norm"'
-version: 0.1.0
-date-released: 2026-11-01
+version: 0.2.0
+date-released: 2026-11-02
 license: Apache-2.0
 repository-code: "https://github.com/kajitetsuya/lean-hellinger"
 authors:
   - family-names: Kaji
     given-names: Tetsuya
     website: "https://kajitetsuya.github.io/"
-abstract: "Lean formalization of the Hellinger bounds for KL divergence, log-likelihood moments, and the Bernstein functional, with uniform equivalences, comparison results, sharpened constants, and the rate of convergence of the sieve maximum likelihood estimator."
+abstract: "Lean formalization of the Hellinger bounds on the Kullback–Leibler divergence, the Kullback–Leibler variation, and the Bernstein \"norm\", with uniform equivalences, comparison results, sharpened constants, and the rate of convergence of the sieve maximum likelihood estimator."
 preferred-citation:
   type: article
   authors:

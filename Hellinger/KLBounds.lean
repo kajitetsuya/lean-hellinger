@@ -9,7 +9,7 @@ public import Hellinger.KL
 public import Hellinger.KLDensityScalar
 public import Hellinger.TailIntegration
 
-/-! Two-sided cutoff bounds for the extended KL divergence. -/
+/-! Two-sided cutoff bounds for the extended Kullback–Leibler divergence. -/
 
 @[expose] public section
 
@@ -31,7 +31,8 @@ theorem tailLogMoment_one_eq_densityKernel (h : μ ≪ ν) (c : ℝ) :
   · simp [logTailDensityKernel, llr, ht]
   · simp [logTailDensityKernel, llr, ht]
 
-/-- The cutoff log tail is controlled by KL without any finite-KL assumption. -/
+/-- The cutoff log tail is controlled by the Kullback–Leibler divergence without assuming it is
+finite. -/
 theorem klTailLowerCoeff_mul_tailLogMoment_le_kl {c : ℝ} (hc : 1 < c) :
     ENNReal.ofReal (klTailLowerCoeff c) * tailLogMoment μ ν c 1 ≤ kl μ ν := by
   by_cases h : μ ≪ ν
@@ -53,7 +54,8 @@ theorem klTailLowerCoeff_mul_tailLogMoment_le_kl {c : ℝ} (hc : 1 < c) :
           (klTailLowerCoeff_mul_logTail_le_klFun hc ENNReal.toReal_nonneg)
   · simp [kl, InformationTheory.klDiv_of_not_ac h]
 
-/-- KL is bounded by squared Hellinger distance and the strictly truncated log tail. -/
+/-- The Kullback–Leibler divergence is bounded by squared Hellinger distance and the strictly
+truncated log tail. -/
 theorem kl_le_hellinger_add_tailLogMoment {c : ℝ} (hc : 1 < c) :
     kl μ ν ≤ ENNReal.ofReal (klUpperCoeff c) * hellingerSq μ ν +
       tailLogMoment μ ν c 1 := by

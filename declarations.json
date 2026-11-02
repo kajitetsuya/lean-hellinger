@@ -291,6 +291,17 @@
       ]
     },
     {
+      "key": "theorem8-printed",
+      "paper": "Theorem 8",
+      "title": "The printed single-radius entropy condition does not suffice",
+      "declaration": "Hellinger.MLE.printedTheorem8_false",
+      "related_declarations": [
+        "Hellinger.MLE.PrintedCounterexample.estimator_isMLE",
+        "Hellinger.MLE.PrintedCounterexample.hdist_estimator",
+        "Hellinger.MLE.PrintedCounterexample.printed_entropy"
+      ]
+    },
+    {
       "key": "theorem8-power-envelope",
       "paper": "Theorem 8",
       "title": "Sieve MLE rate under the power envelope",
@@ -313,7 +324,7 @@
     {
       "key": "bernstein-maximal-inequality",
       "paper": "Proof of Theorem 8",
-      "title": "Bernstein-norm bracketing maximal inequality",
+      "title": "Bracketing maximal inequality for the Bernstein \"norm\"",
       "declaration": "Hellinger.MLE.External.vdw_2_14_18_prime",
       "related_declarations": []
     },

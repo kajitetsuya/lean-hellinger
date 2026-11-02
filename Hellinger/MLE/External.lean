@@ -29,7 +29,7 @@ projections on a product probability space:
   the non-trivial reverse direction, which shows that this statement is no stronger than
   theirs;
 * `J̃_[](δ, F, ‖·‖_{P,B})` uses brackets of size `‖u - l‖_{P,B} < ε` with measurable endpoints
-  of finite Bernstein size. Requiring measurability can only enlarge bracketing numbers and
+  of finite Bernstein "norm". Requiring measurability can only enlarge bracketing numbers and
   so weakens, never strengthens, the stated bound;
 * `≲` is a universal constant `K₀`, chosen before the space, measure, class, sample size and
   radius.

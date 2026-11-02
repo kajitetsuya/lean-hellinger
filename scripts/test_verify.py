@@ -24,6 +24,7 @@ SPEC = importlib.util.spec_from_file_location("snapshot_verifier", ROOT / "scrip
 verifier = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(verifier)
+LIB = verifier.LIBRARY
 RUN_KERNEL = "--kernel" in sys.argv
 if RUN_KERNEL:
     sys.argv.remove("--kernel")
@@ -45,7 +46,7 @@ class SnapshotGuards(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name).resolve()
-        self.names = {"lean-toolchain", "lake-manifest.json", "lakefile.toml", "Hellinger.lean",
+        self.names = {"lean-toolchain", "lake-manifest.json", "lakefile.toml", f"{LIB}.lean",
                       "declarations.json", "scripts/verify.py", "LICENSE"}
         for name in self.names:
             path = self.root / name
@@ -77,7 +78,7 @@ class SnapshotGuards(unittest.TestCase):
             verifier.verify_snapshot(self.root)
 
     def test_changed_file_is_rejected(self):
-        (self.root / "Hellinger.lean").write_text("changed\n", encoding="utf-8")
+        (self.root / f"{LIB}.lean").write_text("changed\n", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "hash mismatch"):
             verifier.verify_snapshot(self.root)
 
@@ -139,10 +140,10 @@ class DeclarationGuards(unittest.TestCase):
 
     def test_exact_principal_inventory_and_related_exports(self):
         data = self.valid_map()
-        data["results"][0]["related_declarations"] = ["Hellinger.additional_export"]
+        data["results"][0]["related_declarations"] = [f"{LIB}.additional_export"]
         rows, names = verifier.check_declarations(data)
         self.assertEqual(len(rows), len(verifier.MAIN_DECLARATIONS))
-        self.assertEqual(names, verifier.MAIN_DECLARATIONS | {"Hellinger.additional_export"})
+        self.assertEqual(names, verifier.MAIN_DECLARATIONS | {f"{LIB}.additional_export"})
 
     def test_missing_duplicate_and_replaced_principal_exports_are_rejected(self):
         for change in ("missing", "duplicate", "replaced"):
@@ -153,19 +154,19 @@ class DeclarationGuards(unittest.TestCase):
                 elif change == "duplicate":
                     data["results"][0]["declaration"] = data["results"][1]["declaration"]
                 else:
-                    data["results"][0]["declaration"] = "Hellinger.weaker_result"
+                    data["results"][0]["declaration"] = f"{LIB}.weaker_result"
                 with self.assertRaises(ValueError):
                     verifier.check_declarations(data)
 
     def test_lean_command_injection_is_rejected(self):
         data = self.valid_map()
-        data["results"][0]["related_declarations"] = ["Hellinger.foo\n#eval 1"]
+        data["results"][0]["related_declarations"] = [f"{LIB}.foo\n#eval 1"]
         with self.assertRaisesRegex(ValueError, "Malformed Lean declaration"):
             verifier.check_declarations(data)
 
     def test_duplicate_related_exports_are_rejected(self):
         data = self.valid_map()
-        data["results"][0]["related_declarations"] = ["Hellinger.foo", "Hellinger.foo"]
+        data["results"][0]["related_declarations"] = [f"{LIB}.foo", f"{LIB}.foo"]
         with self.assertRaisesRegex(ValueError, "Duplicate related"):
             verifier.check_declarations(data)
 
@@ -175,40 +176,40 @@ class ImportGraphGuards(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name).resolve()
-        (self.root / "Hellinger").mkdir()
+        (self.root / LIB).mkdir()
 
     def write(self, module, source):
         (self.root / (module.replace(".", "/") + ".lean")).write_text(source, encoding="utf-8")
 
     def test_topological_order_ignores_nested_comments_and_strings(self):
-        self.write("Hellinger", "module\npublic import Hellinger.B\n")
-        self.write("Hellinger.B", "module\n/- import Hellinger.Missing /- nested -/ -/\n"
-                   "import all Hellinger.A -- trailing comment\n#eval \"import Hellinger.Missing\"\n")
-        self.write("Hellinger.A", "module\n")
-        self.assertEqual(verifier.local_import_order(self.root, ["Hellinger", "Hellinger.B", "Hellinger.A"]),
-                         ["Hellinger.A", "Hellinger.B", "Hellinger"])
+        self.write(LIB, f"module\npublic import {LIB}.B\n")
+        self.write(f"{LIB}.B", f"module\n/- import {LIB}.Missing /- nested -/ -/\n"
+                   f"import all {LIB}.A -- trailing comment\n#eval \"import {LIB}.Missing\"\n")
+        self.write(f"{LIB}.A", "module\n")
+        self.assertEqual(verifier.local_import_order(self.root, [LIB, f"{LIB}.B", f"{LIB}.A"]),
+                         [f"{LIB}.A", f"{LIB}.B", LIB])
 
     def test_missing_local_import_is_rejected(self):
-        self.write("Hellinger", "module\nimport Hellinger.Missing\n")
+        self.write(LIB, f"module\nimport {LIB}.Missing\n")
         with self.assertRaisesRegex(ValueError, "Missing local import"):
-            verifier.local_import_order(self.root, ["Hellinger"])
+            verifier.local_import_order(self.root, [LIB])
 
     def test_local_cycles_are_rejected(self):
-        self.write("Hellinger", "module\nimport Hellinger.A\n")
-        self.write("Hellinger.A", "module\nimport Hellinger\n")
+        self.write(LIB, f"module\nimport {LIB}.A\n")
+        self.write(f"{LIB}.A", f"module\nimport {LIB}\n")
         with self.assertRaisesRegex(ValueError, "import cycle"):
-            verifier.local_import_order(self.root, ["Hellinger", "Hellinger.A"])
+            verifier.local_import_order(self.root, [LIB, f"{LIB}.A"])
 
     def test_unsupported_import_syntax_fails_closed(self):
-        self.write("Hellinger", "module\nimport Hellinger.A Hellinger.B\n")
+        self.write(LIB, f"module\nimport {LIB}.A {LIB}.B\n")
         with self.assertRaisesRegex(ValueError, "Unsupported import syntax"):
-            verifier.local_import_order(self.root, ["Hellinger"])
+            verifier.local_import_order(self.root, [LIB])
 
 
 class AuditParserGuards(unittest.TestCase):
     """Synthetic protocol data tests parsing only; no proof pass is simulated."""
     def setUp(self):
-        self.modules = ["Hellinger.Fixture"]
+        self.modules = [f"{LIB}.Fixture"]
         self.row = {"module": self.modules[0], "name": "ordinary", "axioms": ["propext"],
                     "unsafe": False, "partial": False}
         self.report = {"modules": self.modules, "declarations": [self.row]}
@@ -244,7 +245,7 @@ class AuditParserGuards(unittest.TestCase):
 
     def test_unapproved_axiom_on_unused_private_declaration_is_rejected(self):
         extra = copy.deepcopy(self.row)
-        extra.update(name="_private.Hellinger.Fixture.0.unused", axioms=["sorryAx"])
+        extra.update(name=f"_private.{LIB}.Fixture.0.unused", axioms=["sorryAx"])
         self.report["declarations"].append(extra)
         with self.assertRaisesRegex(ValueError, "Unapproved axioms"):
             self.check()

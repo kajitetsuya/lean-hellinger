@@ -93,7 +93,7 @@ noncomputable def hBracketingNumber (μ : Measure 𝒳) (ε : ℝ≥0∞) (F : S
 noncomputable def hBracketingIntegral (μ : Measure 𝒳) (δ : ℝ) (F : Set (𝒳 → ℝ≥0)) : ℝ≥0∞ :=
   bracketingIntegral (HellingerAdmissible μ) (hdist μ) δ F
 
-/-! ### The Bernstein functional -/
+/-! ### The Bernstein "norm" -/
 
 /-- `‖f‖²_{P,B} = 2 P(e^{|f|} - 1 - |f|)`. Not a norm: neither homogeneous nor subadditive. -/
 noncomputable def bernsteinFunSq (P : Measure 𝒳) (f : 𝒳 → ℝ) : ℝ≥0∞ :=
@@ -103,7 +103,7 @@ noncomputable def bernsteinFunSq (P : Measure 𝒳) (f : 𝒳 → ℝ) : ℝ≥0
 noncomputable def bernsteinFun (P : Measure 𝒳) (f : 𝒳 → ℝ) : ℝ≥0∞ :=
   bernsteinFunSq P f ^ (1 / 2 : ℝ)
 
-/-- Bernstein brackets: measurable endpoints of finite Bernstein size. -/
+/-- Bernstein brackets: measurable endpoints of finite Bernstein "norm". -/
 def BernsteinAdmissible (P : Measure 𝒳) (l u : 𝒳 → ℝ) : Prop :=
   Measurable l ∧ Measurable u ∧ bernsteinFun P l < ∞ ∧ bernsteinFun P u < ∞
 
@@ -123,15 +123,15 @@ variable {Ω : Type*} [MeasurableSpace Ω]
 
 /-- Outer expectation `E^* Z`: the infimum of `∫⁻ g` over measurable pointwise majorants `g`.
 (`∫⁻` of a nonmeasurable function is an inner integral and is not used.) -/
-noncomputable def outerLIntegral (ℙ : Measure Ω) (Z : Ω → ℝ≥0∞) : ℝ≥0∞ :=
-  ⨅ (g : Ω → ℝ≥0∞) (_ : Measurable g) (_ : Z ≤ g), ∫⁻ ω, g ω ∂ℙ
+noncomputable def outerLIntegral (Pr : Measure Ω) (Z : Ω → ℝ≥0∞) : ℝ≥0∞ :=
+  ⨅ (g : Ω → ℝ≥0∞) (_ : Measurable g) (_ : Z ≤ g), ∫⁻ ω, g ω ∂Pr
 
 /-- `Z_n = O_P^*(b_n)` for nonnegative extended `Z_n`: for every `ε > 0` there are `K > 0` and
 `N` with outer probability of `{Z_n > K b_n}` at most `ε` for `n ≥ N`. The probability of an
 arbitrary set is its outer measure. A zero rate is handled without division. -/
-def OPStar (ℙ : Measure Ω) (Z : ℕ → Ω → ℝ≥0∞) (b : ℕ → ℝ) : Prop :=
+def OPStar (Pr : Measure Ω) (Z : ℕ → Ω → ℝ≥0∞) (b : ℕ → ℝ) : Prop :=
   ∀ ε : ℝ, 0 < ε → ∃ K : ℝ, 0 < K ∧ ∃ N : ℕ, ∀ n ≥ N,
-    ℙ {ω | ENNReal.ofReal (K * b n) < Z n ω} ≤ ENNReal.ofReal ε
+    Pr {ω | ENNReal.ofReal (K * b n) < Z n ω} ≤ ENNReal.ofReal ε
 
 /-- The first `n` observations of a sequence. -/
 def sample (X : ℕ → Ω → 𝒳) (n : ℕ) (ω : Ω) : Fin n → 𝒳 := fun i ↦ X i ω
@@ -139,7 +139,7 @@ def sample (X : ℕ → Ω → 𝒳) (n : ℕ) (ω : Ω) : Fin n → 𝒳 := fun
 end Outer
 
 /-- The empirical process `𝔾_n f = √n (ℙ_n f - P f)` at a sample point `x : Fin n → 𝒳`.
-It is used only for classes of functions with finite Bernstein size, which are integrable. -/
+It is used only for classes of functions with finite Bernstein "norm", which are integrable. -/
 noncomputable def empiricalProcess (P : Measure 𝒳) {n : ℕ} (f : 𝒳 → ℝ) (x : Fin n → 𝒳) : ℝ :=
   Real.sqrt n * ((n : ℝ)⁻¹ * ∑ i, f (x i) - ∫ y, f y ∂P)
 

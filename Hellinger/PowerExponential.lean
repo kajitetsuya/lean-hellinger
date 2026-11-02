@@ -10,7 +10,7 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 
-/-! The exact real-exponent polynomial/exponential maximum for variation bounds. -/
+/-! The exact real-exponent polynomial/exponential maximum for Kullback–Leibler variation bounds. -/
 
 @[expose] public section
 

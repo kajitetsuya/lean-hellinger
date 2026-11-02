@@ -64,14 +64,14 @@ constant `M`): i.i.d. observations with law `p₀ · μ`, a sieve of probability
 deterministic `p_n ∈ S_n` with `h(p₀, p_n) ≤ D δ_n` eventually, an arbitrary estimator
 `phat_n ∈ S_n`, and the likelihood comparison `ℙ_n log phat ≥ ℙ_n log p_n - O_P(δ_n²)`. -/
 structure MLEBaseHypotheses {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure 𝒳)
-    {Ω : Type v} [MeasurableSpace Ω] (ℙ : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
+    {Ω : Type v} [MeasurableSpace Ω] (Pr : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
     (S : ℕ → Set (𝒳 → ℝ≥0)) (pn : ℕ → 𝒳 → ℝ≥0) (phat : ℕ → Ω → 𝒳 → ℝ≥0)
     (δ : ℕ → ℝ) (D : ℝ) : Prop where
-  probability : IsProbabilityMeasure ℙ
+  probability : IsProbabilityMeasure Pr
   density : IsProbDensity μ p₀
   measurable_obs : ∀ i, Measurable (X i)
-  indep : iIndepFun X ℙ
-  law_obs : ∀ i, ℙ.map (X i) = law μ p₀
+  indep : iIndepFun X Pr
+  law_obs : ∀ i, Pr.map (X i) = law μ p₀
   sieve_density : ∀ n, ∀ p ∈ S n, IsProbDensity μ p
   comparator_mem : ∀ n, pn n ∈ S n
   estimator_mem : ∀ n ω, phat n ω ∈ S n
@@ -80,49 +80,49 @@ structure MLEBaseHypotheses {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure
   /-- `h(p₀, p_n) ≤ D δ_n` eventually. -/
   approx : ∃ N, ∀ n ≥ N, hdist μ p₀ (pn n) ≤ ENNReal.ofReal (D * δ n)
   /-- `ℙ_n log phat_n ≥ ℙ_n log p_n - O_P(δ_n²)`, through the nonnegative deficit. -/
-  likelihood : OPStar ℙ (fun n ω ↦ logLikDeficit (sample X n ω) (pn n) (phat n ω))
+  likelihood : OPStar Pr (fun n ω ↦ logLikDeficit (sample X n ω) (pn n) (phat n ω))
     (fun n ↦ δ n ^ 2)
 
 /-- **Corrected Theorem 8, weak-law form**: under (D), with the squared log-tail bound
 replaced by the weak-law truncation condition (W). -/
 def Theorem8WeakLawStatement : Prop :=
   ∀ {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure 𝒳)
-    {Ω : Type v} [MeasurableSpace Ω] (ℙ : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
+    {Ω : Type v} [MeasurableSpace Ω] (Pr : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
     (S : ℕ → Set (𝒳 → ℝ≥0)) (pn : ℕ → 𝒳 → ℝ≥0) (phat : ℕ → Ω → 𝒳 → ℝ≥0)
     (δ : ℕ → ℝ) (D : ℝ),
-    MLEBaseHypotheses μ ℙ X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
-      AnnularTailCondition μ p₀ S δ → RateConclusion μ ℙ p₀ phat δ
+    MLEBaseHypotheses μ Pr X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
+      AnnularTailCondition μ p₀ S δ → RateConclusion μ Pr p₀ phat δ
 
 /-- The ordinary `O_P` version of the weak-law form when the Hellinger error is measurable. -/
 def Theorem8WeakLawMeasurableStatement : Prop :=
   ∀ {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure 𝒳)
-    {Ω : Type v} [MeasurableSpace Ω] (ℙ : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
+    {Ω : Type v} [MeasurableSpace Ω] (Pr : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
     (S : ℕ → Set (𝒳 → ℝ≥0)) (pn : ℕ → 𝒳 → ℝ≥0) (phat : ℕ → Ω → 𝒳 → ℝ≥0)
     (δ : ℕ → ℝ) (D : ℝ),
-    MLEBaseHypotheses μ ℙ X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
+    MLEBaseHypotheses μ Pr X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
     AnnularTailCondition μ p₀ S δ →
     (∀ n, Measurable fun ω ↦ hdist μ p₀ (phat n ω)) →
       ∀ ε : ℝ, 0 < ε → ∃ K : ℝ, 0 < K ∧ ∃ N : ℕ, ∀ n ≥ N,
         MeasurableSet {ω | ENNReal.ofReal (K * rate δ n) < hdist μ p₀ (phat n ω)} ∧
-        ℙ {ω | ENNReal.ofReal (K * rate δ n) < hdist μ p₀ (phat n ω)} ≤ ENNReal.ofReal ε
+        Pr {ω | ENNReal.ofReal (K * rate δ n) < hdist μ p₀ (phat n ω)} ≤ ENNReal.ofReal ε
 
 /-- The weak-law form under the power envelope (H). -/
 def Theorem8WeakLawPowerEnvelopeStatement : Prop :=
   ∀ {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure 𝒳)
-    {Ω : Type v} [MeasurableSpace Ω] (ℙ : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
+    {Ω : Type v} [MeasurableSpace Ω] (Pr : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
     (S : ℕ → Set (𝒳 → ℝ≥0)) (pn : ℕ → 𝒳 → ℝ≥0) (phat : ℕ → Ω → 𝒳 → ℝ≥0)
     (δ : ℕ → ℝ) (D : ℝ),
-    MLEBaseHypotheses μ ℙ X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
-      PowerEnvelopeCondition μ p₀ S δ → RateConclusion μ ℙ p₀ phat δ
+    MLEBaseHypotheses μ Pr X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
+      PowerEnvelopeCondition μ p₀ S δ → RateConclusion μ Pr p₀ phat δ
 
 /-- The weak-law form under the whole-sieve bound (G). -/
 def Theorem8WeakLawWholeSieveStatement : Prop :=
   ∀ {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure 𝒳)
-    {Ω : Type v} [MeasurableSpace Ω] (ℙ : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
+    {Ω : Type v} [MeasurableSpace Ω] (Pr : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
     (S : ℕ → Set (𝒳 → ℝ≥0)) (pn : ℕ → 𝒳 → ℝ≥0) (phat : ℕ → Ω → 𝒳 → ℝ≥0)
     (δ : ℕ → ℝ) (D : ℝ),
-    MLEBaseHypotheses μ ℙ X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
-      WholeSieveCondition μ S δ → RateConclusion μ ℙ p₀ phat δ
+    MLEBaseHypotheses μ Pr X p₀ S pn phat δ D → WeakLawTruncation μ p₀ pn δ →
+      WholeSieveCondition μ S δ → RateConclusion μ Pr p₀ phat δ
 
 /-- The first-moment log tail implies (W), with `L_n = ⊤`. -/
 def FirstMomentImpliesWeakLawStatement : Prop :=
@@ -135,20 +135,20 @@ def FirstMomentImpliesWeakLawStatement : Prop :=
 first-moment log tail. -/
 def Theorem8FirstMomentStatement : Prop :=
   ∀ {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure 𝒳)
-    {Ω : Type v} [MeasurableSpace Ω] (ℙ : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
+    {Ω : Type v} [MeasurableSpace Ω] (Pr : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
     (S : ℕ → Set (𝒳 → ℝ≥0)) (pn : ℕ → 𝒳 → ℝ≥0) (phat : ℕ → Ω → 𝒳 → ℝ≥0)
     (δ : ℕ → ℝ) (D : ℝ),
-    MLEBaseHypotheses μ ℙ X p₀ S pn phat δ D → FirstMomentLogTail μ p₀ pn δ →
-      AnnularTailCondition μ p₀ S δ → RateConclusion μ ℙ p₀ phat δ
+    MLEBaseHypotheses μ Pr X p₀ S pn phat δ D → FirstMomentLogTail μ p₀ pn δ →
+      AnnularTailCondition μ p₀ S δ → RateConclusion μ Pr p₀ phat δ
 
 /-- The hypotheses of Theorem 8 of the paper give the base hypotheses and the first-moment log
 tail (by the interpolation `A₁ ≤ 4 h A₂^{1/2}`). -/
 def SquaredTailImpliesFirstMomentStatement : Prop :=
   ∀ {𝒳 : Type u} [MeasurableSpace 𝒳] (μ : Measure 𝒳)
-    {Ω : Type v} [MeasurableSpace Ω] (ℙ : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
+    {Ω : Type v} [MeasurableSpace Ω] (Pr : Measure Ω) (X : ℕ → Ω → 𝒳) (p₀ : 𝒳 → ℝ≥0)
     (S : ℕ → Set (𝒳 → ℝ≥0)) (pn : ℕ → 𝒳 → ℝ≥0) (phat : ℕ → Ω → 𝒳 → ℝ≥0)
     (δ : ℕ → ℝ) (D M : ℝ),
-    MLEHypotheses μ ℙ X p₀ S pn phat δ D M →
-      MLEBaseHypotheses μ ℙ X p₀ S pn phat δ D ∧ FirstMomentLogTail μ p₀ pn δ
+    MLEHypotheses μ Pr X p₀ S pn phat δ D M →
+      MLEBaseHypotheses μ Pr X p₀ S pn phat δ D ∧ FirstMomentLogTail μ p₀ pn δ
 
 end Hellinger.MLE

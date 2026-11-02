@@ -11,7 +11,8 @@ public import Hellinger.TailMass
 public import Hellinger.KLBounds
 public import Hellinger.VariationBounds
 
-/-! WS log-tail moments for every positive real order, including the zero-multiplier coefficient and an arbitrary fixed ordinary cutoff greater than one. -/
+/-! WS log-tail moments for every positive real order, including the zero-multiplier coefficient
+and an arbitrary fixed ordinary cutoff greater than one. -/
 
 @[expose] public section
 
@@ -92,8 +93,8 @@ theorem tailLogMoment_le_scaled_tailPower (hμν : μ ≪ ν)
         (rpow_le_scaled_exp hk hs (llr_pos_of_mem_tailEvent ha hx).le)
     _ = _ := by rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
 
-/-- The log moment between two cutoffs is bounded by the ordinary-tail mass.
-The band is empty automatically when its endpoints are reversed. -/
+/-- The tail moment of the log-likelihood ratio between two cutoffs is bounded by the
+ordinary-tail mass. The band is empty automatically when its endpoints are reversed. -/
 theorem tailLogMoment_le_tailLogMoment_add_mass [IsFiniteMeasure μ] [IsFiniteMeasure ν]
     (hμν : μ ≪ ν) {q a k : ℝ} (hq : 1 < q) (ha : 1 < a) (hk : 0 < k) :
     tailLogMoment μ ν q k ≤ tailLogMoment μ ν a k +
@@ -189,7 +190,7 @@ theorem tailLogMoment_native_le_of_ws {δ k M : ℝ} (hδ : 0 < δ) (hδ1 : δ �
         mul_le_mul_of_nonneg_right hscalar hD.le
 
 /-- Exact quantitative WS log-tail bound at an arbitrary fixed ordinary cutoff.
-No absolute-continuity or finite-log-moment hypothesis is added. -/
+No absolute-continuity hypothesis or finite moment of the log-likelihood ratio is added. -/
 theorem tailLogMoment_le_of_ws {q δ k M : ℝ} (hq : 1 < q) (hδ : 0 < δ)
     (hδ1 : δ ≤ 1) (hk : 0 < k) (hM : 0 ≤ M)
     (hWS : tailPower μ ν (Real.exp (1 / δ)) δ ≤ ENNReal.ofReal M * hellingerSq μ ν) :
@@ -233,7 +234,8 @@ theorem tailLogMoment_four_le_of_ws {δ k M : ℝ} (hδ : 0 < δ) (hδ1 : δ ≤
   simpa only [wsMomentCoeff_four, wsLogScale] using
     (tailLogMoment_le_of_ws (μ := μ) (ν := ν) (q := 4) (by norm_num) hδ hδ1 hk hM hWS)
 
-/-- WS implies the quantitative KL bound without a finite-KL premise. -/
+/-- WS implies the quantitative Kullback–Leibler divergence bound without assuming the divergence is
+finite. -/
 theorem kl_le_of_ws {q δ M : ℝ} (hq : 1 < q) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
     (hM : 0 ≤ M)
     (hWS : tailPower μ ν (Real.exp (1 / δ)) δ ≤ ENNReal.ofReal M * hellingerSq μ ν) :
@@ -248,7 +250,7 @@ theorem kl_le_of_ws {q δ M : ℝ} (hq : 1 < q) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
       rw [ENNReal.ofReal_add (klUpperCoeff_pos q).le (wsMomentCoeff_pos hq hδ zero_lt_one).le,
         add_mul]
 
-/-- WS implies every real variation bound in the full source range `k>=2`. -/
+/-- WS implies every real-order Kullback–Leibler variation bound in the full source range `k>=2`. -/
 theorem logMoment_le_of_ws {q δ k M : ℝ} (hq : 1 < q) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
     (hk : 2 ≤ k) (hM : 0 ≤ M)
     (hWS : tailPower μ ν (Real.exp (1 / δ)) δ ≤ ENNReal.ofReal M * hellingerSq μ ν) :
@@ -278,7 +280,8 @@ theorem uniform_tailLogMoment_of_uniform_ws (μ : Measure α) [IsProbabilityMeas
   let : IsProbabilityMeasure ν := hF ν hν
   exact tailLogMoment_le_of_ws hq hδ hδ1 hk M.property (by simpa using hM ν hν)
 
-/-- Family WS implies one uniform KL multiplier, with no nonempty-family assumption. -/
+/-- Family WS implies one uniform Kullback–Leibler divergence multiplier, with no nonempty-family
+assumption. -/
 theorem uniform_kl_of_uniform_ws (μ : Measure α) [IsProbabilityMeasure μ]
     (F : Set (Measure α)) (hF : ∀ ν ∈ F, IsProbabilityMeasure ν)
     {q δ : ℝ} (hq : 1 < q) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
@@ -292,7 +295,7 @@ theorem uniform_kl_of_uniform_ws (μ : Measure α) [IsProbabilityMeasure μ]
   let : IsProbabilityMeasure ν := hF ν hν
   exact kl_le_of_ws hq hδ hδ1 M.property (by simpa using hM ν hν)
 
-/-- Family WS implies one uniform real-order variation multiplier. -/
+/-- Family WS implies one uniform real-order Kullback–Leibler variation multiplier. -/
 theorem uniform_logMoment_of_uniform_ws (μ : Measure α) [IsProbabilityMeasure μ]
     (F : Set (Measure α)) (hF : ∀ ν ∈ F, IsProbabilityMeasure ν)
     {q δ k : ℝ} (hq : 1 < q) (hδ : 0 < δ) (hδ1 : δ ≤ 1) (hk : 2 ≤ k)
@@ -307,7 +310,8 @@ theorem uniform_logMoment_of_uniform_ws (μ : Measure α) [IsProbabilityMeasure 
   let : IsProbabilityMeasure ν := hF ν hν
   exact logMoment_le_of_ws hq hδ hδ1 hk M.property (by simpa using hM ν hν)
 
-/-- The joint KL and full real-order variation consequence of the same WS bound. -/
+/-- The joint Kullback–Leibler divergence and full real-order Kullback–Leibler variation
+consequence of the same WS bound. -/
 theorem kl_and_logMoment_le_of_ws {q δ M : ℝ} (hq : 1 < q) (hδ : 0 < δ)
     (hδ1 : δ ≤ 1) (hM : 0 ≤ M)
     (hWS : tailPower μ ν (Real.exp (1 / δ)) δ ≤ ENNReal.ofReal M * hellingerSq μ ν) :
