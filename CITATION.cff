@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "Please cite the accompanying article when using these formalizations."
 type: software
-title: "Hellinger bounds in Lean"
+title: 'Lean Formalization of "The Hellinger Bounds on the Kullback–Leibler Divergence and the Bernstein Norm"'
 version: 0.1.0
 date-released: 2026-11-01
 license: Apache-2.0

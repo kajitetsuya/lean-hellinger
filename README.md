@@ -1,4 +1,4 @@
-# Hellinger bounds in Lean
+# Lean Formalization of "The Hellinger Bounds on the Kullback–Leibler Divergence and the Bernstein Norm"
 
 This Lean package formalizes Theorems 1, 2 and 8 and the Comparison section of Kaji (2026), [*The Hellinger bounds on the Kullback–Leibler divergence and the Bernstein norm*](https://doi.org/10.1007/s42973-026-00243-x).
 It characterizes when squared Hellinger distance controls Kullback–Leibler (KL) divergence, log-likelihood moments, and the squared Bernstein functional.
